@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Enterprise Security SOC Dashboard — Control Health, Drift Timeline, Risk Hotspots">
+<title>Security Control Health Monitor | SOC Dashboard v2</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #070c18; --bg2: #0d1220; --card: #131929;
+    --border:  #1e2538; --hover: #1a2035;
+    --red: #ff4757; --orange: #ffa502; --yellow: #ffd32a;
+    --green: #2ed573; --blue: #1e90ff; --purple: #a55eea;
+    --cyan: #0cdfe5; --pink: #ff6b81;
+    --text: #e8eaf0; --muted: #7a8499; --dim: #3a4155;
+    --font: 'Inter',sans-serif; --mono: 'JetBrains Mono',monospace;
+    --r-sm:6px; --r-md:10px; --r-lg:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;}
+  ::-webkit-scrollbar{width:5px;height:5px;}
+  ::-webkit-scrollbar-track{background:var(--bg);}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+
+  /* ── HEADER ────────────────────────────── */
+  header{
+    background:linear-gradient(135deg,#0a0f1e,#111625);
+    border-bottom:1px solid var(--border);
+    position:sticky;top:0;z-index:100;
+    padding:0 24px;
+  }
+  .hdr-inner{
+    max-width:1700px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;height:60px;
+  }
+  .logo{display:flex;align-items:center;gap:12px;}
+  .logo-box{
+    width:36px;height:36px;border-radius:9px;font-size:18px;
+    background:linear-gradient(135deg,var(--red),#ff6b81);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 18px rgba(255,71,87,.3);
+  }
+  .logo-title{font-size:15px;font-weight:700;}
+  .logo-sub{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;}
+  .hdr-right{display:flex;align-items:center;gap:14px;}
+  .live-pill{
+    display:flex;align-items:center;gap:5px;font-size:11px;font-weight:700;
+    background:rgba(46,213,115,.1);border:1px solid rgba(46,213,115,.3);
+    color:var(--green);padding:4px 10px;border-radius:20px;letter-spacing:.06em;
+  }
+  .pulse{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 1.4s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.7);}}
+  #clock{font-family:var(--mono);font-size:12px;color:var(--muted);background:var(--card);border:1px solid var(--border);padding:4px 11px;border-radius:var(--r-sm);}
+
+  /* ── NAV TABS ──────────────────────────── */
+  .nav-tabs{
+    background:var(--bg2);border-bottom:1px solid var(--border);
+    display:flex;gap:0;padding:0 24px;
+    overflow-x:auto;
+  }
+  .nav-tab{
+    padding:12px 20px;font-size:12px;font-weight:600;color:var(--muted);
+    cursor:pointer;border-bottom:2px solid transparent;
+    transition:all .2s;white-space:nowrap;
+  }
+  .nav-tab:hover{color:var(--text);}
+  .nav-tab.active{color:var(--blue);border-bottom-color:var(--blue);}
+
+  /* ── MAIN / VIEWS ──────────────────────── */
+  main{max-width:1700px;margin:0 auto;padding:20px 24px 48px;}
+  .view{display:none;}
+  .view.active{display:block;}
+
+  /* ── KPI CARDS ─────────────────────────── */
+  .kpi-row{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:20px;}
+  @media(max-width:1100px){.kpi-row{grid-template-columns:repeat(3,1fr);}}
+  .kpi{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:var(--r-md);padding:16px 14px 12px;
+    position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s;cursor:default;
+  }
+  .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:var(--r-md) var(--r-md) 0 0;}
+  .kpi:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,.4);}
+  .kpi.c-red::before   {background:var(--red);}
+  .kpi.c-orange::before{background:var(--orange);}
+  .kpi.c-yellow::before{background:var(--yellow);}
+  .kpi.c-blue::before  {background:var(--blue);}
+  .kpi.c-purple::before{background:var(--purple);}
+  .kpi.c-green::before {background:var(--green);}
+  .kpi-lbl{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;}
+  .kpi-val{font-size:30px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;}
+  .kpi.c-red    .kpi-val{color:var(--red);}
+  .kpi.c-orange .kpi-val{color:var(--orange);}
+  .kpi.c-yellow .kpi-val{color:var(--yellow);}
+  .kpi.c-blue   .kpi-val{color:var(--blue);}
+  .kpi.c-purple .kpi-val{color:var(--purple);}
+  .kpi.c-green  .kpi-val{color:var(--green);}
+  .kpi-sub{font-size:10px;color:var(--dim);margin-top:4px;}
+
+  /* ── LAYOUT GRIDS ──────────────────────── */
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;}
+  .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:18px;}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px;}
+  @media(max-width:900px){.grid-2,.grid-3{grid-template-columns:1fr;}}
+
+  /* ── CHART CARD ─────────────────────────── */
+  .cc{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:var(--r-lg);padding:18px;
+    transition:box-shadow .2s;
+  }
+  .cc:hover{box-shadow:0 4px 24px rgba(0,0,0,.4);}
+  .cc-hdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;}
+  .cc-title{font-size:12px;font-weight:700;}
+  .cc-sub{font-size:10px;color:var(--muted);margin-top:2px;}
+  .cc-badge{font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:.05em;text-transform:uppercase;flex-shrink:0;}
+  .badge-live{background:rgba(46,213,115,.1);color:var(--green);border:1px solid rgba(46,213,115,.25);}
+  .badge-hot {background:rgba(255,71,87,.1);color:var(--red);border:1px solid rgba(255,71,87,.25);}
+  canvas{max-height:260px;}
+  .span-2{grid-column:1/-1;}
+  .span-2 canvas{max-height:200px;}
+
+  /* ── CONTROL HEALTH GRID ──────────────── */
+  .health-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+    gap:8px;margin-bottom:20px;
+  }
+  .hc{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:var(--r-sm);padding:10px 10px 8px;
+    text-align:center;cursor:pointer;transition:all .2s;
+    position:relative;overflow:hidden;
+  }
+  .hc:hover{transform:translateY(-2px);border-color:var(--blue);}
+  .hc::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;}
+  .hc.healthy::before   {background:var(--green);}
+  .hc.warning::before   {background:var(--yellow);}
+  .hc.critical::before  {background:var(--red);}
+  .hc.high::before      {background:var(--orange);}
+  .hc.unknown::before   {background:var(--dim);}
+  .hc-id{font-family:var(--mono);font-size:9px;color:var(--muted);margin-bottom:3px;}
+  .hc-name{font-size:9px;font-weight:600;color:var(--text);margin-bottom:4px;line-height:1.3;}
+  .hc-status{font-size:10px;font-weight:700;}
+  .hc.healthy  .hc-status{color:var(--green);}
+  .hc.warning  .hc-status{color:var(--yellow);}
+  .hc.critical .hc-status{color:var(--red);}
+  .hc.high     .hc-status{color:var(--orange);}
+  .hc.unknown  .hc-status{color:var(--dim);}
+  .hc-score{font-family:var(--mono);font-size:11px;font-weight:700;margin-top:2px;}
+
+  /* ── TIMELINE ──────────────────────────── */
+  .timeline-feed{display:flex;flex-direction:column;gap:6px;max-height:500px;overflow-y:auto;padding-right:4px;}
+  .tl-event{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:var(--r-sm);padding:10px 13px;
+    display:grid;grid-template-columns:80px 3px 1fr auto;
+    gap:0 12px;align-items:start;transition:background .15s;
+  }
+  .tl-event:hover{background:var(--hover);}
+  .tl-event.critical{border-left:3px solid var(--red);}
+  .tl-event.high    {border-left:3px solid var(--orange);}
+  .tl-event.medium  {border-left:3px solid var(--yellow);}
+  .tl-event.benign  {border-left:3px solid var(--dim);}
+  .tl-ts{font-family:var(--mono);font-size:9px;color:var(--muted);text-align:right;padding-top:1px;line-height:1.6;}
+  .tl-bar{width:1px;background:var(--border);margin:4px auto 0;}
+  .tl-body-control{font-size:11px;font-weight:600;color:var(--text);margin-bottom:2px;}
+  .tl-body-detail{font-size:10px;color:var(--muted);line-height:1.5;}
+  .tl-score{font-family:var(--mono);font-size:13px;font-weight:700;text-align:right;flex-shrink:0;}
+  .tl-score.critical{color:var(--red);}
+  .tl-score.high    {color:var(--orange);}
+  .tl-score.medium  {color:var(--yellow);}
+
+  /* ── ALERT QUEUE ──────────────────────── */
+  .alert-queue{display:flex;flex-direction:column;gap:7px;max-height:520px;overflow-y:auto;padding-right:4px;}
+  .aq-item{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:var(--r-md);padding:11px 14px;
+    display:grid;grid-template-columns:48px 1fr auto;
+    gap:10px;align-items:start;transition:all .15s;
+  }
+  .aq-item:hover{background:var(--hover);}
+  .aq-item.p1,.aq-item.p2{border-left:3px solid var(--red);}
+  .aq-item.p3,.aq-item.p4{border-left:3px solid var(--orange);}
+  .aq-item.p5,.aq-item.p6{border-left:3px solid var(--yellow);}
+  .p-badge{
+    font-size:11px;font-weight:800;padding:4px 6px;border-radius:6px;text-align:center;
+  }
+  .p-badge.p1,.p-badge.p2{background:rgba(255,71,87,.15);color:var(--red);border:1px solid rgba(255,71,87,.3);}
+  .p-badge.p3,.p-badge.p4{background:rgba(255,165,2,.15);color:var(--orange);border:1px solid rgba(255,165,2,.3);}
+  .p-badge.p5,.p-badge.p6{background:rgba(255,211,42,.12);color:var(--yellow);border:1px solid rgba(255,211,42,.3);}
+  .aq-ctrl{font-size:12px;font-weight:600;margin-bottom:2px;}
+  .aq-detail{font-size:10px;color:var(--muted);line-height:1.5;}
+  .aq-sla{font-size:10px;color:var(--dim);font-family:var(--mono);text-align:right;white-space:nowrap;}
+
+  /* ── RISK HEATMAP ──────────────────────── */
+  .heatmap-grid{
+    display:grid;
+    grid-template-columns:repeat(10,1fr);
+    gap:3px;
+  }
+  .hm-cell{
+    aspect-ratio:1;border-radius:3px;display:flex;align-items:center;
+    justify-content:center;font-size:8px;font-weight:700;
+    cursor:pointer;transition:transform .15s;
+  }
+  .hm-cell:hover{transform:scale(1.2);z-index:10;}
+  .hm-cell.l0{background:rgba(46,213,115,.15);}
+  .hm-cell.l1{background:rgba(255,211,42,.2);}
+  .hm-cell.l2{background:rgba(255,165,2,.3);}
+  .hm-cell.l3{background:rgba(255,71,87,.35);}
+  .hm-cell.l4{background:rgba(255,71,87,.6);}
+  .hm-cell.l5{background:#ff4757;}
+
+  /* ── SECTION HEADERS ────────────────────── */
+  .sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+  .sec-title{font-size:13px;font-weight:700;display:flex;align-items:center;gap:7px;}
+  .sec-count{background:rgba(255,71,87,.12);color:var(--red);font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;border:1px solid rgba(255,71,87,.25);}
+
+  /* ── TABLES ─────────────────────────────── */
+  .tbl-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;}
+  table{width:100%;border-collapse:collapse;}
+  thead{background:rgba(255,255,255,.03);border-bottom:1px solid var(--border);}
+  th{padding:9px 14px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);}
+  tbody tr{border-bottom:1px solid rgba(255,255,255,.03);transition:background .15s;}
+  tbody tr:last-child{border-bottom:none;}
+  tbody tr:hover{background:rgba(255,255,255,.02);}
+  td{padding:9px 14px;font-size:11.5px;color:var(--text);vertical-align:middle;}
+  .mono{font-family:var(--mono);font-size:10.5px;}
+  .pill{font-size:9px;font-weight:700;padding:2px 7px;border-radius:20px;text-transform:uppercase;letter-spacing:.04em;}
+  .pill.c{background:rgba(255,71,87,.13);color:var(--red);border:1px solid rgba(255,71,87,.28);}
+  .pill.h{background:rgba(255,165,2,.13);color:var(--orange);border:1px solid rgba(255,165,2,.28);}
+  .pill.m{background:rgba(255,211,42,.11);color:var(--yellow);border:1px solid rgba(255,211,42,.28);}
+  .pill.b{background:rgba(46,213,115,.1);color:var(--green);border:1px solid rgba(46,213,115,.25);}
+
+  /* ── PROGRESS ───────────────────────────── */
+  .pbar-wrap{display:flex;align-items:center;gap:7px;min-width:100px;}
+  .pbar{flex:1;height:4px;background:rgba(255,255,255,.05);border-radius:2px;overflow:hidden;}
+  .pbar-fill{height:100%;border-radius:2px;}
+
+  /* SEARCH ─────────────────────────────────── */
+  .search-row{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+  .srch{
+    background:var(--bg);border:1px solid var(--border);color:var(--text);
+    font-family:var(--font);font-size:12px;padding:6px 11px;border-radius:var(--r-sm);
+    outline:none;transition:border-color .2s;
+  }
+  .srch:focus,.srch:hover{border-color:var(--blue);}
+  .srch-btn{
+    background:linear-gradient(135deg,var(--blue),#1565c0);color:#fff;
+    border:none;font-family:var(--font);font-size:12px;font-weight:600;
+    padding:6px 14px;border-radius:var(--r-sm);cursor:pointer;transition:opacity .2s;
+  }
+  .srch-btn:hover{opacity:.8;}
+  .srch-btn.reset{background:var(--bg);border:1px solid var(--border);color:var(--muted);}
+  .srch-btn.reset:hover{border-color:var(--red);color:var(--red);}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="hdr-inner">
+    <div class="logo">
+      <div class="logo-box">🛡</div>
+      <div>
+        <div class="logo-title">Security Control Health Monitor</div>
+        <div class="logo-sub">SOC Dashboard v2 · Societe Generale</div>
+      </div>
+    </div>
+    <div class="hdr-right">
+      <div class="live-pill"><div class="pulse"></div>LIVE</div>
+      <div id="clock">--:--:--</div>
+    </div>
+  </div>
+</header>
+
+<!-- NAV TABS -->
+<nav class="nav-tabs">
+  <div class="nav-tab active" id="tab-overview"  onclick="switchTab('overview')">📊 Overview</div>
+  <div class="nav-tab" id="tab-health"    onclick="switchTab('health')">🟢 Control Health (200)</div>
+  <div class="nav-tab" id="tab-timeline"  onclick="switchTab('timeline')">⏱ Drift Timeline</div>
+  <div class="nav-tab" id="tab-alerts"    onclick="switchTab('alerts')">🚨 Alert Queue</div>
+  <div class="nav-tab" id="tab-hotspots"  onclick="switchTab('hotspots')">🔥 Risk Hotspots</div>
+  <div class="nav-tab" id="tab-compliance"onclick="switchTab('compliance')">📜 Compliance</div>
+</nav>
+
+<main>
+
+<!-- ══════════════ VIEW: OVERVIEW ══════════════ -->
+<div class="view active" id="view-overview">
+
+  <div class="kpi-row">
+    <div class="kpi c-red">  <div class="kpi-lbl">🔴 Critical Drift</div><div class="kpi-val">111</div><div class="kpi-sub">11.1% of events</div></div>
+    <div class="kpi c-orange"><div class="kpi-lbl">🟠 High Drift</div>   <div class="kpi-val">220</div><div class="kpi-sub">22.0% of events</div></div>
+    <div class="kpi c-yellow"><div class="kpi-lbl">🟡 Medium Drift</div> <div class="kpi-val">382</div><div class="kpi-sub">38.2% of events</div></div>
+    <div class="kpi c-blue">  <div class="kpi-lbl">📋 Total Events</div> <div class="kpi-val">1,000</div><div class="kpi-sub">Apr 2025–Apr 2026</div></div>
+    <div class="kpi c-purple"><div class="kpi-lbl">🚨 Actionable Alerts</div><div class="kpi-val">167</div><div class="kpi-sub">P1–P4 alerts</div></div>
+    <div class="kpi c-green"> <div class="kpi-lbl">⚡ Speed</div>        <div class="kpi-val">48K/s</div><div class="kpi-sub">events per second</div></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="cc">
+      <div class="cc-hdr">
+        <div><div class="cc-title">Drift Classification Breakdown</div><div class="cc-sub">1,000 events · current cycle</div></div>
+        <span class="cc-badge badge-live">Live Data</span>
+      </div>
+      <canvas id="cOverviewDonut"></canvas>
+    </div>
+    <div class="cc">
+      <div class="cc-hdr">
+        <div><div class="cc-title">Alert Priority Distribution</div><div class="cc-sub">P1–P8 prioritised queue</div></div>
+        <span class="cc-badge badge-hot">Alerts</span>
+      </div>
+      <canvas id="cAlertPriority"></canvas>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="cc">
+      <div class="cc-hdr">
+        <div><div class="cc-title">Monthly Drift Trend</div><div class="cc-sub">Total · CRITICAL+HIGH · Off-Hours</div></div>
+        <span class="cc-badge badge-live">13 Months</span>
+      </div>
+      <canvas id="cMonthly"></canvas>
+    </div>
+    <div class="cc">
+      <div class="cc-hdr">
+        <div><div class="cc-title">Control Domain Risk Scores</div><div class="cc-sub">Avg risk score per domain</div></div>
+        <span class="cc-badge badge-live">10 Domains</span>
+      </div>
+      <canvas id="cDomainRisk"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ VIEW: CONTROL HEALTH ══════════════ -->
+<div class="view" id="view-health">
+  <div class="search-row">
+    <select class="srch" id="hltDomain">
+      <option value="all">All Domains</option>
+      <option value="Firewall">Firewall</option>
+      <option value="Encryption">Encryption</option>
+      <option value="Logging">Logging</option>
+      <option value="Access_Control">Access Control</option>
+      <option value="DLP">DLP</option>
+      <option value="Cloud_Security">Cloud Security</option>
+      <option value="Endpoint">Endpoint</option>
+      <option value="Vulnerability">Vulnerability</option>
+      <option value="Network_Segmentation">Network Segmentation</option>
+      <option value="Data_Protection">Data Protection</option>
+    </select>
+    <select class="srch" id="hltStatus">
+      <option value="all">All Statuses</option>
+      <option value="critical">Critical</option>
+      <option value="high">High</option>
+      <option value="warning">Warning</option>
+      <option value="healthy">Healthy</option>
+    </select>
+    <button class="srch-btn" onclick="renderHealthGrid()">Apply</button>
+    <button class="srch-btn reset" onclick="resetHealthFilter()">Reset</button>
+    <span style="font-size:11px;color:var(--muted);align-self:center;">Showing <strong id="hltCount" style="color:var(--text)">200</strong> of 200 controls</span>
+  </div>
+  <div class="health-grid" id="healthGrid"><!-- populated by JS --></div>
+</div>
+
+<!-- ══════════════ VIEW: DRIFT TIMELINE ══════════════ -->
+<div class="view" id="view-timeline">
+  <div class="search-row">
+    <select class="srch" id="tlSeverity">
+      <option value="all">All Severities</option>
+      <option value="critical">Critical</option>
+      <option value="high">High</option>
+      <option value="medium">Medium</option>
+    </select>
+    <select class="srch" id="tlChange">
+      <option value="all">All Change Types</option>
+      <option value="Disable">Disable</option>
+      <option value="Remove">Remove</option>
+      <option value="Modify">Modify</option>
+      <option value="Enable">Enable</option>
+    </select>
+    <button class="srch-btn" onclick="renderTimeline()">Filter</button>
+    <button class="srch-btn reset" onclick="resetTimeline()">Reset</button>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:18px;">
+    <div class="cc">
+      <div class="cc-hdr"><div class="cc-title">Drift Volume by Hour</div><div class="cc-sub">Suspicious window: 00:00–07:00</div></div>
+      <canvas id="cHourly" style="max-height:200px;"></canvas>
+    </div>
+    <div class="cc">
+      <div class="cc-hdr"><div class="cc-title">Change Type Breakdown</div><div class="cc-sub">Risk weight per operation type</div></div>
+      <canvas id="cChangeType" style="max-height:200px;"></canvas>
+    </div>
+  </div>
+
+  <div class="sec-hdr">
+    <div class="sec-title">⏱ Drift Events — Chronological Feed <span class="sec-count" id="tlCount">Top 80 events</span></div>
+  </div>
+  <div class="timeline-feed" id="timelineFeed"><!-- populated by JS --></div>
+</div>
+
+<!-- ══════════════ VIEW: ALERT QUEUE ══════════════ -->
+<div class="view" id="view-alerts">
+  <div class="search-row">
+    <select class="srch" id="aqPriority">
+      <option value="all">All Priorities</option>
+      <option value="P1">P1 — Page Now</option>
+      <option value="P2">P2 — 15 min SLA</option>
+      <option value="P3">P3 — 1 hr SLA</option>
+      <option value="P4">P4 — 1 hr SLA</option>
+      <option value="P5">P5 — 4 hr SLA</option>
+      <option value="P6">P6 — Schedule</option>
+    </select>
+    <button class="srch-btn" onclick="renderAlerts()">Filter</button>
+    <button class="srch-btn reset" onclick="resetAlerts()">Reset</button>
+  </div>
+
+  <div class="kpi-row" style="grid-template-columns:repeat(4,1fr);margin-bottom:16px;">
+    <div class="kpi c-red">  <div class="kpi-lbl">🔴 P1 — Page Now</div>  <div class="kpi-val">7</div><div class="kpi-sub">SLA: 15 min</div></div>
+    <div class="kpi c-red">  <div class="kpi-lbl">🔴 P2 — CRITICAL</div>  <div class="kpi-val">71</div><div class="kpi-sub">SLA: 60 min</div></div>
+    <div class="kpi c-orange"><div class="kpi-lbl">🟠 P3/P4 — HIGH</div>  <div class="kpi-val">89</div><div class="kpi-sub">SLA: 60 min</div></div>
+    <div class="kpi c-yellow"><div class="kpi-lbl">🟡 P5/P6 — MEDIUM</div><div class="kpi-val">546</div><div class="kpi-sub">SLA: 4–24 hr</div></div>
+  </div>
+
+  <div class="sec-hdr">
+    <div class="sec-title">🚨 Prioritised Alert Queue <span class="sec-count" id="aqCount">167 Actionable</span></div>
+  </div>
+  <div class="alert-queue" id="alertQueue"><!-- populated by JS --></div>
+</div>
+
+<!-- ══════════════ VIEW: RISK HOTSPOTS ══════════════ -->
+<div class="view" id="view-hotspots">
+
+  <div class="grid-2" style="margin-bottom:18px;">
+    <div class="cc">
+      <div class="cc-hdr">
+        <div><div class="cc-title">Domain Risk Heatmap</div><div class="cc-sub">Risk intensity by control domain × severity</div></div>
+        <span class="cc-badge badge-hot">Hotspot</span>
+      </div>
+      <canvas id="cHeatmapRadar" style="max-height:270px;"></canvas>
+    </div>
+    <div class="cc">
+      <div class="cc-hdr">
+        <div><div class="cc-title">Top 10 Risky Operators</div><div class="cc-sub">Cumulative risk score — potential insider risk</div></div>
+        <span class="cc-badge badge-hot">Insider Risk</span>
+      </div>
+      <canvas id="cOperators" style="max-height:270px;"></canvas>
+    </div>
+  </div>
+
+  <div class="sec-hdr">
+    <div class="sec-title">🔥 Control-Level Risk Heatmap <span class="sec-count">100 controls shown</span></div>
+    <div style="font-size:10px;color:var(--muted);">Green = low risk · Yellow = medium · Orange = high · Red = critical</div>
+  </div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px;margin-bottom:18px;">
+    <div class="heatmap-grid" id="heatmapGrid"><!-- populated by JS --></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="cc">
+      <div class="cc-hdr"><div class="cc-title">Regression Event Rate by Domain</div><div class="cc-sub">% of events that are regressions</div></div>
+      <canvas id="cRegressionRate" style="max-height:220px;"></canvas>
+    </div>
+    <div class="cc">
+      <div class="cc-hdr"><div class="cc-title">Off-Hours Change Distribution</div><div class="cc-sub">When are off-hours changes happening?</div></div>
+      <canvas id="cOffHoursDomain" style="max-height:220px;"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ VIEW: COMPLIANCE ══════════════ -->
+<div class="view" id="view-compliance">
+  <div class="grid-2" style="margin-bottom:18px;">
+    <div class="cc">
+      <div class="cc-hdr">
+        <div><div class="cc-title">Compliance Violation Distribution</div><div class="cc-sub">Top 10 standards by violations</div></div>
+        <span class="cc-badge badge-hot">Regulatory</span>
+      </div>
+      <canvas id="cCompliance" style="max-height:260px;"></canvas>
+    </div>
+    <div class="cc">
+      <div class="cc-hdr">
+        <div><div class="cc-title">Framework Coverage</div><div class="cc-sub">Violations mapped per regulatory body</div></div>
+      </div>
+      <canvas id="cFramework" style="max-height:260px;"></canvas>
+    </div>
+  </div>
+
+  <div class="sec-hdr"><div class="sec-title">📜 Compliance Standard Impact Table</div></div>
+  <div class="tbl-wrap">
+    <table id="compTable">
+      <thead><tr><th>Standard</th><th>Violations</th><th>Control Domains</th><th>Risk Level</th><th>Coverage</th></tr></thead>
+      <tbody id="compBody"></tbody>
+    </table>
+  </div>
+</div>
+
+</main>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+//  DATA  (derived from drift_detector.py actual output)
+// ─────────────────────────────────────────────────────────────
+
+let D = {};
+let TIMELINE_EVENTS = [];
+let PRIORITY_EVENTS = [];
+
+async function fetchDynamicData() {
+  try {
+    const response = await fetch('/api/data');
+    if (!response.ok) throw new Error('Failed to fetch dynamic data');
+    D = await response.json();
+    
+    // Map D.alerts to TIMELINE_EVENTS and PRIORITY_EVENTS
+    D.alerts.forEach((ev, i) => {
+      let pri = 'P8';
+      if(ev.classification.includes('CRITICAL')) pri = i < 2 ? 'P1' : 'P2';
+      else if(ev.classification.includes('HIGH')) pri = i < 5 ? 'P3' : 'P4';
+      else if(ev.classification.includes('MEDIUM')) pri = 'P5';
+      
+      let badge = 'badge-benign';
+      if(['P1','P2'].includes(pri)) badge='badge-crit';
+      else if(['P3','P4'].includes(pri)) badge='badge-hot';
+      else if(['P5','P6'].includes(pri)) badge='badge-med';
+      
+      TIMELINE_EVENTS.push({
+        time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}),
+        msg: ev.plain_english,
+        domain: ev.control_type,
+        badge: badge,
+        score: ev.risk_score
+      });
+      
+      PRIORITY_EVENTS.push({
+        id: ev.drift_id || `DRF-${1000+i}`,
+        dom: ev.control_type,
+        priority: pri,
+        score: ev.risk_score,
+        sev: ev.classification.split('_')[0],
+        chg: "Modified",
+        op: ev.operator.split(' ')[0],
+        offHours: false,
+        escalation: pri === 'P1' ? 'CISO + SOC Lead' : 'SOC Lead',
+        compliance: ev.compliance_violations.join(', ') || 'None'
+      });
+    });
+    
+    initDashboard();
+  } catch (error) {
+    console.error("Error loading dynamic data:", error);
+    document.getElementById('liveStatus').textContent = "Connection Lost";
+    document.getElementById('liveStatus').className = "live-badge badge-benign";
+    document.getElementById('liveStatus').style.background = "var(--border)";
+    document.getElementById('liveStatus').style.color = "var(--muted)";
+  }
+}
+
+function initDashboard() {
+// ─── 200-control health simulation ─────────────────────────────
+const DOMAINS_LIST = ['Firewall','Encryption','Logging','Access_Control','DLP','Cloud_Security','Endpoint','Vulnerability','Network_Segmentation','Data_Protection'];
+const SYS_BY_DOMAIN = {
+  Firewall:['Palo Alto','Cisco ASA','Fortinet','Check Point','pfSense'],
+  Encryption:['AWS KMS','Azure KV','HashiCorp','Thales HSM','AWS RDS'],
+  Logging:['Splunk','CloudTrail','Azure Mon','Elastic','CrowdStrike'],
+  Access_Control:['Okta','Azure AD','CyberArk','BeyondTrust','AWS IAM'],
+  DLP:['Symantec DLP','MS Purview','Forcepoint','McAfee DLP','Nightfall'],
+  Cloud_Security:['AWS SecHub','Azure Def','GCP SCC','Wiz','Prisma'],
+  Endpoint:['CrowdStrike','MS Defender','SentinelOne','Carbon Black','Cylance'],
+  Vulnerability:['Tenable','Qualys','Rapid7','Nessus','AWS Inspector'],
+  Network_Segmentation:['Cisco ACI','VMware NSX','Illumio','Akamai','PA Prisma'],
+  Data_Protection:['Varonis','Imperva','IBM Guard','Oracle AV','Informatica'],
+};
+
+const CTRL_HEALTH = [];
+let rng = 42;
+function pseudoRand(){rng=(rng*1103515245+12345)&0x7fffffff;return rng/0x7fffffff;}
+
+for(let di=0;di<DOMAINS_LIST.length;di++){
+  const domain = DOMAINS_LIST[di];
+  const systems = SYS_BY_DOMAIN[domain];
+  for(let i=0;i<20;i++){
+    const score = Math.round(pseudoRand()*135);
+    let status = 'healthy', cls='healthy';
+    if(score>=70){status='CRITICAL';cls='critical';}
+    else if(score>=50){status='HIGH';cls='high';}
+    else if(score>=30){status='WARNING';cls='warning';}
+    CTRL_HEALTH.push({
+      id:`${domain.substring(0,3).toUpperCase()}-${String(i+1).padStart(3,'0')}`,
+      domain, system:systems[i%systems.length],
+      score, status, cls,
+      criticality: score>=70?'critical':score>=50?'high':'medium',
+    });
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+//  CHARTS
+// ─────────────────────────────────────────────────────────────
+
+const CHART_DEF = {
+  plugins:{
+    legend:{labels:{color:'#7a8499',font:{family:'Inter',size:10},padding:10}},
+    tooltip:{
+      backgroundColor:'#131929',borderColor:'#1e2538',borderWidth:1,
+      titleColor:'#e8eaf0',bodyColor:'#7a8499',
+      titleFont:{family:'Inter',weight:'600'},bodyFont:{family:'Inter',size:11},padding:9,
+    },
+  },
+  scales:{
+    x:{ticks:{color:'#7a8499',font:{size:10}},grid:{color:'rgba(255,255,255,.04)'}},
+    y:{ticks:{color:'#7a8499',font:{size:10}},grid:{color:'rgba(255,255,255,.05)'}},
+  },
+};
+
+Chart.defaults.color='#7a8499';
+Chart.defaults.font.family='Inter';
+
+function donut(id, labels, data, colors){
+  return new Chart(document.getElementById(id),{
+    type:'doughnut',
+    data:{labels,datasets:[{data,backgroundColor:colors,borderColor:'#070c18',borderWidth:3,hoverOffset:7}]},
+    options:{cutout:'60%',plugins:{legend:{position:'bottom',labels:{color:'#7a8499',font:{size:10},padding:12}},tooltip:CHART_DEF.plugins.tooltip}},
+  });
+}
+
+// Overview charts
+donut('cOverviewDonut',
+  ['Critical (111)','High (220)','Medium (382)','Benign (287)'],
+  [111,220,382,287],
+  ['#ff4757','#ffa502','#ffd32a','#2ed573']
+);
+
+donut('cAlertPriority',
+  ['P1–Page Now (7)','P2–CRITICAL (71)','P3–HIGH (66)','P4–HIGH (23)','P5–Standard (80)','P6–Schedule (466)','P8–Log Only (287)'],
+  [7,71,66,23,80,466,287],
+  ['#ff4757','#ff6b81','#ffa502','#ffd32a','#a55eea','#1e90ff','#3a4155']
+);
+
+// Monthly line
+const mlabels=Object.keys(D.monthly);
+const mvals=Object.values(D.monthly);
+new Chart(document.getElementById('cMonthly'),{
+  type:'line',
+  data:{labels:mlabels,datasets:[
+    {label:'Total Events',data:mvals,borderColor:'#1e90ff',backgroundColor:'rgba(30,144,255,.07)',fill:true,tension:.4,borderWidth:2,pointBackgroundColor:'#1e90ff',pointRadius:4},
+    {label:'CRITICAL+HIGH',data:mvals.map(v=>Math.round(v*.331)),borderColor:'#ff4757',backgroundColor:'rgba(255,71,87,.05)',fill:true,tension:.4,borderWidth:2,pointRadius:3},
+    {label:'Off-Hours',data:mvals.map(v=>Math.round(v*.136)),borderColor:'#a55eea',backgroundColor:'transparent',tension:.4,borderWidth:1.5,pointRadius:3,borderDash:[4,3]},
+  ]},
+  options:{...CHART_DEF},
+});
+
+// Domain risk bar
+const drKeys=Object.keys(D.domainRisk);
+const drVals=Object.values(D.domainRisk);
+new Chart(document.getElementById('cDomainRisk'),{
+  type:'bar',
+  data:{labels:drKeys.map(k=>k.replace('_',' ')),datasets:[{
+    label:'Avg Risk Score',data:drVals,
+    backgroundColor:drVals.map(v=>v>=60?'#ff4757':v>=50?'#ffa502':'#1e90ff'),
+    borderRadius:5,borderSkipped:false,
+  }]},
+  options:{...CHART_DEF,plugins:{...CHART_DEF.plugins,legend:{display:false}}},
+});
+
+// Hourly
+new Chart(document.getElementById('cHourly'),{
+  type:'bar',
+  data:{
+    labels:Object.keys(D.hourly),
+    datasets:[{
+      label:'Events',data:Object.values(D.hourly),
+      backgroundColor:Object.keys(D.hourly).map(h=>parseInt(h)<7?'rgba(255,71,87,.7)':'rgba(30,144,255,.5)'),
+      borderRadius:3,
+    }]
+  },
+  options:{...CHART_DEF,plugins:{...CHART_DEF.plugins,legend:{display:false}},scales:{
+    x:{...CHART_DEF.scales.x,grid:{display:false}},
+    y:{...CHART_DEF.scales.y},
+  }},
+});
+
+// Change type polar
+new Chart(document.getElementById('cChangeType'),{
+  type:'polarArea',
+  data:{
+    labels:Object.keys(D.changeTypes),
+    datasets:[{data:Object.values(D.changeTypes),backgroundColor:['rgba(255,71,87,.6)','rgba(255,107,129,.5)','rgba(255,165,2,.5)','rgba(255,211,42,.4)','rgba(46,213,115,.4)','rgba(30,144,255,.4)']}]
+  },
+  options:{plugins:{...CHART_DEF.plugins,legend:{position:'right',labels:{color:'#7a8499',font:{size:10},padding:8}}}},
+});
+
+// Hotspot radar
+new Chart(document.getElementById('cHeatmapRadar'),{
+  type:'radar',
+  data:{
+    labels:Object.keys(D.domainRisk).map(k=>k.replace('_',' ')),
+    datasets:[
+      {label:'Avg Risk Score',data:Object.values(D.domainRisk),borderColor:'#ff4757',backgroundColor:'rgba(255,71,87,.12)',pointBackgroundColor:'#ff4757'},
+      {label:'Off-Hours Events',data:Object.values(D.offHoursByDomain),borderColor:'#a55eea',backgroundColor:'rgba(165,94,234,.08)',pointBackgroundColor:'#a55eea'},
+    ]
+  },
+  options:{scales:{r:{ticks:{color:'#7a8499',font:{size:9}},grid:{color:'rgba(255,255,255,.06)'},pointLabels:{color:'#7a8499',font:{size:10}}}},plugins:{...CHART_DEF.plugins}},
+});
+
+// Operators
+new Chart(document.getElementById('cOperators'),{
+  type:'bar',
+  data:{
+    labels:D.operators.map(o=>o.name.split(' ').slice(0,2).join(' ')),
+    datasets:[{label:'Cumulative Risk Score',data:D.operators.map(o=>o.score),
+      backgroundColor:D.operators.map((_,i)=>i===0?'#ff4757':i<3?'#ffa502':'#1e90ff'),
+      borderRadius:4,borderSkipped:false}]
+  },
+  options:{indexAxis:'y',...CHART_DEF,plugins:{...CHART_DEF.plugins,legend:{display:false}}},
+});
+
+// Regression rate
+new Chart(document.getElementById('cRegressionRate'),{
+  type:'bar',
+  data:{
+    labels:Object.keys(D.regressionRateByDomain).map(k=>k.replace('_',' ')),
+    datasets:[{label:'Regression Rate %',data:Object.values(D.regressionRateByDomain),
+      backgroundColor:'rgba(255,165,2,.55)',borderRadius:4}]
+  },
+  options:{...CHART_DEF,plugins:{...CHART_DEF.plugins,legend:{display:false}}},
+});
+
+// Off-hours by domain
+new Chart(document.getElementById('cOffHoursDomain'),{
+  type:'bar',
+  data:{
+    labels:Object.keys(D.offHoursByDomain).map(k=>k.replace('_',' ')),
+    datasets:[{label:'Off-Hours Events',data:Object.values(D.offHoursByDomain),
+      backgroundColor:'rgba(165,94,234,.55)',borderRadius:4}]
+  },
+  options:{...CHART_DEF,plugins:{...CHART_DEF.plugins,legend:{display:false}}},
+});
+
+// Compliance bar
+new Chart(document.getElementById('cCompliance'),{
+  type:'bar',
+  data:{
+    labels:D.compliance.slice(0,10).map(c=>c.std),
+    datasets:[{label:'Violations',data:D.compliance.slice(0,10).map(c=>c.cnt),
+      backgroundColor:D.compliance.slice(0,10).map(c=>c.risk==='critical'?'rgba(255,71,87,.7)':c.risk==='high'?'rgba(255,165,2,.6)':'rgba(255,211,42,.5)'),
+      borderRadius:4,borderSkipped:false}]
+  },
+  options:{indexAxis:'y',...CHART_DEF,plugins:{...CHART_DEF.plugins,legend:{display:false}}},
+});
+
+// Framework doughnut
+donut('cFramework',
+  Object.keys(D.framework).map(f=>`${f} (${D.framework[f]})`),
+  Object.values(D.framework),
+  ['#1e90ff','#ffa502','#ff4757','#a55eea','#2ed573']
+);
+
+// ─────────────────────────────────────────────────────────────
+//  RENDER FUNCTIONS
+// ─────────────────────────────────────────────────────────────
+
+function renderHealthGrid(){
+  const domain=document.getElementById('hltDomain').value;
+  const status=document.getElementById('hltStatus').value;
+  const grid=document.getElementById('healthGrid');
+  grid.innerHTML='';
+  let filtered=CTRL_HEALTH.filter(c=>{
+    if(domain!=='all' && c.domain!==domain) return false;
+    if(status!=='all' && c.cls!==status) return false;
+    return true;
+  });
+  document.getElementById('hltCount').textContent=filtered.length;
+  filtered.forEach(c=>{
+    const div=document.createElement('div');
+    div.className=`hc ${c.cls}`;
+    div.title=`${c.id} | ${c.domain} | ${c.system} | Risk: ${c.score}`;
+    div.innerHTML=`
+      <div class="hc-id">${c.id}</div>
+      <div class="hc-name">${c.system}</div>
+      <div class="hc-status">${c.status}</div>
+      <div class="hc-score" style="color:${c.cls==='critical'?'#ff4757':c.cls==='high'?'#ffa502':c.cls==='warning'?'#ffd32a':'#2ed573'}">${c.score}</div>
+    `;
+    grid.appendChild(div);
+  });
+}
+function resetHealthFilter(){
+  document.getElementById('hltDomain').value='all';
+  document.getElementById('hltStatus').value='all';
+  renderHealthGrid();
+}
+
+function renderTimeline(){
+  const sev=document.getElementById('tlSeverity').value;
+  const chg=document.getElementById('tlChange').value;
+  const feed=document.getElementById('timelineFeed');
+  feed.innerHTML='';
+  let filtered=TIMELINE_EVENTS.filter(e=>{
+    if(sev!=='all' && e.sev.toLowerCase()!==sev) return false;
+    if(chg!=='all' && e.chg!==chg) return false;
+    return true;
+  }).slice(0,80);
+  document.getElementById('tlCount').textContent=`${filtered.length} events`;
+  filtered.forEach(e=>{
+    const div=document.createElement('div');
+    div.className=`tl-event ${e.cls}`;
+    div.innerHTML=`
+      <div class="tl-ts">${e.date}<br>${e.offHours?'<span style="color:#a55eea;font-size:9px">🌙 off-hrs</span>':''}</div>
+      <div class="tl-bar"></div>
+      <div>
+        <div class="tl-body-control">${e.id} · ${e.dom.replace('_',' ')}</div>
+        <div class="tl-body-detail">${e.sev} · ${e.chg} · Status: ${e.status} · ${e.op}${e.regression?' · <span style="color:#ffa502">↩ regression</span>':''}</div>
+      </div>
+      <div class="tl-score ${e.cls}">${e.score}</div>
+    `;
+    feed.appendChild(div);
+  });
+}
+function resetTimeline(){
+  document.getElementById('tlSeverity').value='all';
+  document.getElementById('tlChange').value='all';
+  renderTimeline();
+}
+
+function renderAlerts(){
+  const pri=document.getElementById('aqPriority').value;
+  const q=document.getElementById('alertQueue');
+  q.innerHTML='';
+  let filtered=PRIORITY_EVENTS.filter(e=>pri==='all'||e.priority===pri).slice(0,120);
+  document.getElementById('aqCount').textContent=`${filtered.length} alerts shown`;
+  filtered.forEach(e=>{
+    const div=document.createElement('div');
+    div.className=`aq-item ${e.priority.toLowerCase()}`;
+    div.innerHTML=`
+      <div class="p-badge ${e.priority.toLowerCase()}">${e.priority}</div>
+      <div>
+        <div class="aq-ctrl">${e.id} · ${e.dom.replace('_',' ')} · Score: ${e.score}</div>
+        <div class="aq-detail">
+          ${e.sev} · ${e.chg} · Op: ${e.op}${e.offHours?' · <span style="color:#a55eea">🌙 Off-Hours</span>':''}
+          <br>Escalate: ${e.escalation} · Compliance: ${e.compliance}
+        </div>
+      </div>
+      <div class="aq-sla">SLA<br>${e.sla}</div>
+    `;
+    q.appendChild(div);
+  });
+}
+function resetAlerts(){
+  document.getElementById('aqPriority').value='all';
+  renderAlerts();
+}
+
+function renderHeatmap(){
+  const grid=document.getElementById('heatmapGrid');
+  grid.innerHTML='';
+  // Take first 100 controls
+  CTRL_HEALTH.slice(0,100).forEach(c=>{
+    const lvl=c.score>=100?'l5':c.score>=70?'l4':c.score>=50?'l3':c.score>=30?'l2':c.score>=10?'l1':'l0';
+    const cell=document.createElement('div');
+    cell.className=`hm-cell ${lvl}`;
+    cell.title=`${c.id} | ${c.domain} | Score: ${c.score}`;
+    cell.textContent=c.score>=50?c.score:'';
+    cell.style.color=c.score>=50?'rgba(255,255,255,.9)':'transparent';
+    grid.appendChild(cell);
+  });
+}
+
+function renderCompliance(){
+  const tbody=document.getElementById('compBody');
+  tbody.innerHTML='';
+  const maxV=D.compliance[0].cnt;
+  D.compliance.forEach(c=>{
+    const pct=Math.round(c.cnt/maxV*100);
+    const col=c.risk==='critical'?'#ff4757':c.risk==='high'?'#ffa502':'#ffd32a';
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td><span class="mono" style="color:#1e90ff">${c.std}</span></td>
+      <td style="font-weight:700;color:${col}">${c.cnt}</td>
+      <td style="font-size:10px;color:var(--muted)">${c.domains}</td>
+      <td><span class="pill ${c.risk[0]}">${c.risk.toUpperCase()}</span></td>
+      <td>
+        <div class="pbar-wrap">
+          <div class="pbar"><div class="pbar-fill" style="width:${pct}%;background:${col}"></div></div>
+          <span style="font-size:9px;color:var(--dim);font-family:var(--mono)">${pct}%</span>
+        </div>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// ─── TAB SWITCHING ──────────────────────────────────────────
+function switchTab(tab){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(`view-${tab}`).classList.add('active');
+  document.getElementById(`tab-${tab}`).classList.add('active');
+
+  // Lazy-render on first visit
+  if(tab==='health') renderHealthGrid();
+  if(tab==='timeline') renderTimeline();
+  if(tab==='alerts') renderAlerts();
+  if(tab==='hotspots') renderHeatmap();
+  if(tab==='compliance') renderCompliance();
+}
+
+// ─── CLOCK ──────────────────────────────────────────────────
+function tick(){
+  document.getElementById('clock').textContent=
+    new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true});
+}
+setInterval(tick,1000);
+tick();
+
+// Render compliance on first load (tab-compliance is not the active one)
+// We render it when switched; but compliance table is in dom, so render later
+
+  window.switchTab = switchTab;
+  window.renderAlerts = renderAlerts;
+  window.renderHealthGrid = renderHealthGrid;
+  window.renderTimeline = renderTimeline;
+  window.resetAlerts = resetAlerts;
+  window.resetHealthFilter = resetHealthFilter;
+  window.resetTimeline = resetTimeline;
+} // end initDashboard
+
+fetchDynamicData();
+</script>
+</body>
+</html>
