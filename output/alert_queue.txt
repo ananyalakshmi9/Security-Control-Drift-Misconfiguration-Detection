@@ -1,0 +1,1786 @@
+========================================================================
+  SOC ALERT QUEUE  –  PRIORITISED BY RISK LEVEL
+  Generated: 2026-06-14 18:46:24
+  Total: 1000 alerts
+========================================================================
+
+
+────────────────────────────────────────────────────────────────────────
+  ‼️  IMMEDIATE ACTION REQUIRED — 78 P1/P2 Alerts
+────────────────────────────────────────────────────────────────────────
+
+════════════════════════════════════════════════════════════════════════
+ 🔴🔴  [P1] ALERT #0001 — ALT-691  |  Risk Score: 135
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00691
+  Control        : Control-33 (Endpoint)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Disable  |  Status: Drifted
+  Date           : 2025-08-25 01:02:00  |  Off-hours: True  |  Regression: True
+  Operator       : Vikram Moore <vikram.moore@company.com>
+  Approver       : Jason Martinez
+  SLA            : 15 minutes
+  Notify         : CISO, SOC Lead, DPO, On-Call Engineer
+  Channel        : PagerDuty P1 + SMS + Email
+  ACTION REQUIRED: Isolate or disable the affected system immediately. Page CISO.
+  Compliance     : NIST SI-3, CIS 8.1, PCI-DSS 12.10
+  Description    : Disable performed on Control-33 (Endpoint) at 01:02 AM on 2025-08-25 during off-hours (00:00–07:00, suspicious window), reverting a security control from enabled to disabled (regression). Change reason stated: 'Emergency...
+  Remediation    : 1. Re-enable endpoint protection agent. 2. Run full AV/EDR scan on affected endpoints. 3. Review endpoint logs for indicators of compromise.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴🔴  [P1] ALERT #0002 — ALT-908  |  Risk Score: 135
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00908
+  Control        : Control-1 (Access_Control)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Disable  |  Status: Drifted
+  Date           : 2025-11-16 04:58:00  |  Off-hours: True  |  Regression: True
+  Operator       : Anjali Muller <anjali.muller@company.com>
+  Approver       : Larry Quinn
+  SLA            : 15 minutes
+  Notify         : CISO, SOC Lead, DPO, On-Call Engineer
+  Channel        : PagerDuty P1 + SMS + Email
+  ACTION REQUIRED: Isolate or disable the affected system immediately. Page CISO.
+  Compliance     : NIST IA-2, CIS 5.3, PCI-DSS 12.10
+  Description    : Disable performed on Control-1 (Access_Control) at 04:58 AM on 2025-11-16 during off-hours (00:00–07:00, suspicious window), reverting a security control from enabled to disabled (regression). Change reason stated: 'Trou...
+  Remediation    : 1. Re-enable access controls immediately. 2. Audit all access logs during the gap. 3. Force re-authentication for all admin sessions. 4. Review privileged access grants.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴🔴  [P1] ALERT #0003 — ALT-816  |  Risk Score: 120
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00816
+  Control        : Control-95 (Cloud_Security)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Modify  |  Status: Drifted
+  Date           : 2025-05-02 04:00:00  |  Off-hours: True  |  Regression: True
+  Operator       : Nikhil Schmidt <nikhil.schmidt@company.com>
+  Approver       : Raja Clark
+  SLA            : 15 minutes
+  Notify         : CISO, SOC Lead, DPO, On-Call Engineer
+  Channel        : PagerDuty P1 + SMS + Email
+  ACTION REQUIRED: Isolate or disable the affected system immediately. Page CISO.
+  Compliance     : CIS 2.1, NIST CM-2, NIST CM-3
+  Description    : Modify performed on Control-95 (Cloud_Security) at 04:00 AM on 2025-05-02 during off-hours (00:00–07:00, suspicious window), reverting a security control from enabled to disabled (regression). Change reason stated: 'Secu...
+  Remediation    : 1. Revert cloud policy to IaC-defined baseline. 2. Trigger Terraform plan to detect drift. 3. Validate policy enforcement across all regions.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴🔴  [P1] ALERT #0004 — ALT-715  |  Risk Score: 110
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00715
+  Control        : Control-33 (Network_Segmentation)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Modify  |  Status: Drifted
+  Date           : 2025-04-29 04:17:00  |  Off-hours: True  |  Regression: True
+  Operator       : Fatima Yang <fatima.yang@company.com>
+  Approver       : Richard Burke
+  SLA            : 15 minutes
+  Notify         : CISO, SOC Lead, DPO, On-Call Engineer
+  Channel        : PagerDuty P1 + SMS + Email
+  ACTION REQUIRED: Isolate or disable the affected system immediately. Page CISO.
+  Compliance     : NIST SC-7, CIS 12.1
+  Description    : Modify performed on Control-33 (Network_Segmentation) at 04:17 AM on 2025-04-29 during off-hours (00:00–07:00, suspicious window), reverting a security control from enabled to disabled (regression). Change reason stated:...
+  Remediation    : 1. Revert network segmentation rules. 2. Verify VLAN/subnet isolation is intact. 3. Review east-west traffic logs for anomalies.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴🔴  [P1] ALERT #0005 — ALT-672  |  Risk Score: 110
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00672
+  Control        : Control-52 (Access_Control)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Rollback  |  Status: Drifted
+  Date           : 2025-12-13 06:56:00  |  Off-hours: True  |  Regression: True
+  Operator       : Leila Sullivan <leila.sullivan@company.com>
+  Approver       : Mark O'Brien
+  SLA            : 15 minutes
+  Notify         : CISO, SOC Lead, DPO, On-Call Engineer
+  Channel        : PagerDuty P1 + SMS + Email
+  ACTION REQUIRED: Isolate or disable the affected system immediately. Page CISO.
+  Compliance     : NIST IA-2, CIS 5.3, GDPR Article 32
+  Description    : Rollback performed on Control-52 (Access_Control) at 06:56 AM on 2025-12-13 during off-hours (00:00–07:00, suspicious window), reverting a security control from enabled to disabled (regression). Change reason stated: 'Se...
+  Remediation    : 1. Restore access control baseline. 2. Review access logs for anomalous activity. 3. Enforce re-authentication.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴🔴  [P1] ALERT #0006 — ALT-512  |  Risk Score: 95
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00512
+  Control        : Control-74 (Endpoint)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Update  |  Status: Drifted
+  Date           : 2025-10-31 02:57:00  |  Off-hours: True  |  Regression: False
+  Operator       : Brian Ghosh <brian.ghosh@company.com>
+  Approver       : Rohan Patel
+  SLA            : 15 minutes
+  Notify         : CISO, SOC Lead, DPO, On-Call Engineer
+  Channel        : PagerDuty P1 + SMS + Email
+  ACTION REQUIRED: Isolate or disable the affected system immediately. Page CISO.
+  Compliance     : NIST SI-3, CIS 8.1, GDPR Article 32
+  Description    : Update performed on Control-74 (Endpoint) at 02:57 AM on 2025-10-31 during off-hours (00:00–07:00, suspicious window). Change reason stated: 'Performance Tuning'. Current remediation status: Drifted. Risk score: 95 → cla...
+  Remediation    : 1. Restore endpoint security baseline. 2. Force agent update on all managed endpoints. 3. Validate EDR telemetry.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴🔴  [P1] ALERT #0007 — ALT-660  |  Risk Score: 85
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00660
+  Control        : Control-63 (Endpoint)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Update  |  Status: Drifted
+  Date           : 2025-04-21 02:49:00  |  Off-hours: True  |  Regression: False
+  Operator       : Sofia Sun <sofia.sun@company.com>
+  Approver       : James Kim
+  SLA            : 15 minutes
+  Notify         : CISO, SOC Lead, DPO, On-Call Engineer
+  Channel        : PagerDuty P1 + SMS + Email
+  ACTION REQUIRED: Isolate or disable the affected system immediately. Page CISO.
+  Compliance     : NIST SI-3, CIS 8.1
+  Description    : Update performed on Control-63 (Endpoint) at 02:49 AM on 2025-04-21 during off-hours (00:00–07:00, suspicious window). Change reason stated: 'Policy Change'. Current remediation status: Drifted. Risk score: 85 → classifi...
+  Remediation    : 1. Restore endpoint security baseline. 2. Force agent update on all managed endpoints. 3. Validate EDR telemetry.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0008 — ALT-919  |  Risk Score: 125
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00919
+  Control        : Control-12 (Vulnerability)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Disable  |  Status: Drifted
+  Date           : 2026-01-04 18:06:00  |  Off-hours: False  |  Regression: True
+  Operator       : Meera Menon <meera.menon@company.com>
+  Approver       : William Miller
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST RA-5, CIS 7.1, CIS Benchmark v8
+  Description    : Disable performed on Control-12 (Vulnerability) at 06:06 PM on 2026-01-04, reverting a security control from enabled to disabled (regression). Change reason stated: 'Troubleshooting'. Current remediation status: Drifted....
+  Remediation    : 1. Re-enable vulnerability scanning immediately. 2. Schedule emergency scan for affected systems. 3. Review unscanned assets for known CVEs.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0009 — ALT-726  |  Risk Score: 120
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00726
+  Control        : Control-76 (DLP)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Remove  |  Status: Drifted
+  Date           : 2025-11-28 19:28:00  |  Off-hours: False  |  Regression: True
+  Operator       : Amara Sanchez <amara.sanchez@company.com>
+  Approver       : Stephen Rao
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : GDPR 25, ISO 27001 A.13, PCI-DSS 12.10
+  Description    : Remove performed on Control-76 (DLP) at 07:28 PM on 2025-11-28, reverting a security control from enabled to disabled (regression). Change reason stated: 'Performance Tuning'. Current remediation status: Drifted. Risk sc...
+  Remediation    : 1. Restore DLP baseline policy. 2. Scan for data exfiltration during gap window. 3. Notify Compliance.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0010 — ALT-828  |  Risk Score: 115
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00828
+  Control        : Control-18 (Logging)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Disable  |  Status: Drifted
+  Date           : 2025-12-20 18:49:00  |  Off-hours: False  |  Regression: True
+  Operator       : Christopher Lopez <christopher.lopez@company.com>
+  Approver       : Yuki Xu
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST AU-2, CIS 2.1, NIST SI-12
+  Description    : Disable performed on Control-18 (Logging) at 06:49 PM on 2025-12-20, reverting a security control from enabled to disabled (regression). Change reason stated: 'Performance Tuning'. Current remediation status: Drifted. Ri...
+  Remediation    : 1. Immediately re-enable logging via console/API. 2. Audit all API calls during the blind window. 3. Escalate to CISO and SIEM team. 4. File change ticket with root-cause explanation.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0011 — ALT-236  |  Risk Score: 115
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00236
+  Control        : Control-16 (Access_Control)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Disable  |  Status: Drifted
+  Date           : 2026-02-26 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Kenneth Thomas <kenneth.thomas@company.com>
+  Approver       : Nadia Lee
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST IA-2, CIS 5.3
+  Description    : Disable performed on Control-16 (Access_Control) at 10:54 AM on 2026-02-26, reverting a security control from enabled to disabled (regression). Change reason stated: 'Performance Tuning'. Current remediation status: Drif...
+  Remediation    : 1. Re-enable access controls immediately. 2. Audit all access logs during the gap. 3. Force re-authentication for all admin sessions. 4. Review privileged access grants.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0012 — ALT-146  |  Risk Score: 115
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00146
+  Control        : Control-5 (Encryption)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Disable  |  Status: Drifted
+  Date           : 2026-03-01 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Richard Anderson <richard.anderson@company.com>
+  Approver       : David Ramirez
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : GDPR 32, NIST SC-7, PCI-DSS 3.4
+  Description    : Disable performed on Control-5 (Encryption) at 10:54 AM on 2026-03-01, reverting a security control from enabled to disabled (regression). Change reason stated: 'Policy Change'. Current remediation status: Drifted. Risk ...
+  Remediation    : 1. Re-enable encryption immediately. 2. Initiate key rotation per KMS policy. 3. Scan affected data stores for exposure. 4. Notify Data Protection Officer (DPO).
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0013 — ALT-501  |  Risk Score: 110
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00501
+  Control        : Control-11 (DLP)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Disable  |  Status: Under_Review
+  Date           : 2025-12-05 15:03:00  |  Off-hours: False  |  Regression: True
+  Operator       : William Robinson <william.robinson@company.com>
+  Approver       : Isha Sharma
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : GDPR 25, ISO 27001 A.13, ISO 27001 A.12
+  Description    : Disable performed on Control-11 (DLP) at 03:03 PM on 2025-12-05, reverting a security control from enabled to disabled (regression). Change reason stated: 'Emergency Fix'. Current remediation status: Under Review. Risk s...
+  Remediation    : 1. Re-enable DLP policy immediately. 2. Scan outbound email/file transfers during gap. 3. Review USB and cloud-sync activity. 4. Notify Data Governance team.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0014 — ALT-520  |  Risk Score: 110
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00520
+  Control        : Control-37 (Logging)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Disable  |  Status: Under_Review
+  Date           : 2025-12-12 09:53:00  |  Off-hours: False  |  Regression: True
+  Operator       : Amara Pillai <amara.pillai@company.com>
+  Approver       : Brian Meyer
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST AU-2, CIS 2.1, NIST SI-12, ISO 27001 A.12
+  Description    : Disable performed on Control-37 (Logging) at 09:53 AM on 2025-12-12, reverting a security control from enabled to disabled (regression). Change reason stated: 'Security Update'. Current remediation status: Under Review. ...
+  Remediation    : 1. Immediately re-enable logging via console/API. 2. Audit all API calls during the blind window. 3. Escalate to CISO and SIEM team. 4. File change ticket with root-cause explanation.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0015 — ALT-914  |  Risk Score: 110
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00914
+  Control        : Control-27 (Endpoint)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Disable  |  Status: Under_Review
+  Date           : 2025-12-25 22:59:00  |  Off-hours: False  |  Regression: True
+  Operator       : Jeffrey Hwang <jeffrey.hwang@company.com>
+  Approver       : Robert Sullivan
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST SI-3, CIS 8.1, GDPR Article 32
+  Description    : Disable performed on Control-27 (Endpoint) at 10:59 PM on 2025-12-25, reverting a security control from enabled to disabled (regression). Change reason stated: 'Emergency Fix'. Current remediation status: Under Review. R...
+  Remediation    : 1. Re-enable endpoint protection agent. 2. Run full AV/EDR scan on affected endpoints. 3. Review endpoint logs for indicators of compromise.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0016 — ALT-222  |  Risk Score: 110
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00222
+  Control        : Control-57 (DLP)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Disable  |  Status: Under_Review
+  Date           : 2026-01-23 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Eric Bhat <eric.bhat@company.com>
+  Approver       : Pooja Mishra
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : GDPR 25, ISO 27001 A.13
+  Description    : Disable performed on Control-57 (DLP) at 10:54 AM on 2026-01-23, reverting a security control from enabled to disabled (regression). Change reason stated: 'Emergency Fix'. Current remediation status: Under Review. Risk s...
+  Remediation    : 1. Re-enable DLP policy immediately. 2. Scan outbound email/file transfers during gap. 3. Review USB and cloud-sync activity. 4. Notify Data Governance team.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0017 — ALT-28  |  Risk Score: 110
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00028
+  Control        : Control-69 (Logging)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Disable  |  Status: Under_Review
+  Date           : 2026-02-22 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Rajesh Young <rajesh.young@company.com>
+  Approver       : Yuki Jackson
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST AU-2, CIS 2.1, NIST SI-12
+  Description    : Disable performed on Control-69 (Logging) at 10:54 AM on 2026-02-22, reverting a security control from enabled to disabled (regression). Change reason stated: 'Troubleshooting'. Current remediation status: Under Review. ...
+  Remediation    : 1. Immediately re-enable logging via console/API. 2. Audit all API calls during the blind window. 3. Escalate to CISO and SIEM team. 4. File change ticket with root-cause explanation.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0018 — ALT-131  |  Risk Score: 110
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00131
+  Control        : Control-77 (DLP)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Disable  |  Status: Under_Review
+  Date           : 2026-02-22 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Amitabh Davis <amitabh.davis@company.com>
+  Approver       : Nadia Menon
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : GDPR 25, ISO 27001 A.13
+  Description    : Disable performed on Control-77 (DLP) at 10:54 AM on 2026-02-22, reverting a security control from enabled to disabled (regression). Change reason stated: 'Security Update'. Current remediation status: Under Review. Risk...
+  Remediation    : 1. Re-enable DLP policy immediately. 2. Scan outbound email/file transfers during gap. 3. Review USB and cloud-sync activity. 4. Notify Data Governance team.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0019 — ALT-168  |  Risk Score: 110
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00168
+  Control        : Control-72 (Firewall)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Modify  |  Status: Drifted
+  Date           : 2026-03-27 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Neha Ramirez <neha.ramirez@company.com>
+  Approver       : Zainab Johnson
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : CIS 3.1, NIST AC-4
+  Description    : Modify performed on Control-72 (Firewall) at 10:54 AM on 2026-03-27, reverting a security control from enabled to disabled (regression). Change reason stated: 'Policy Change'. Current remediation status: Drifted. Risk sc...
+  Remediation    : 1. Revert to baseline allowed-port list. 2. Block any newly opened ports immediately. 3. Run traffic analysis to detect exploitation. 4. Update firewall change management log.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0020 — ALT-842  |  Risk Score: 105
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00842
+  Control        : Control-82 (Logging)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Disable  |  Status: Drifted
+  Date           : 2025-07-15 18:08:00  |  Off-hours: False  |  Regression: False
+  Operator       : Raja O'Brien <raja.o'brien@company.com>
+  Approver       : Donald Davis
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST AU-2, CIS 2.1, NIST SI-12, ISO 27001 A.12
+  Description    : Disable performed on Control-82 (Logging) at 06:08 PM on 2025-07-15. Change reason stated: 'Emergency Fix'. Current remediation status: Drifted. Risk score: 105 → classified as CRITICAL DRIFT. Business impact: Loss of au...
+  Remediation    : 1. Immediately re-enable logging via console/API. 2. Audit all API calls during the blind window. 3. Escalate to CISO and SIEM team. 4. File change ticket with root-cause explanation.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0021 — ALT-701  |  Risk Score: 105
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00701
+  Control        : Control-30 (Vulnerability)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Remove  |  Status: Under_Review
+  Date           : 2025-08-26 13:24:00  |  Off-hours: False  |  Regression: True
+  Operator       : Elena Reilly <elena.reilly@company.com>
+  Approver       : Thomas Menon
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST RA-5, CIS 7.1, CIS Benchmark v8
+  Description    : Remove performed on Control-30 (Vulnerability) at 01:24 PM on 2025-08-26, reverting a security control from enabled to disabled (regression). Change reason stated: 'Security Update'. Current remediation status: Under Rev...
+  Remediation    : 1. Restore vulnerability management baseline. 2. Run immediate scan on affected scope. 3. Prioritise critical CVEs for patching.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0022 — ALT-588  |  Risk Score: 105
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00588
+  Control        : Control-3 (Network_Segmentation)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Modify  |  Status: Under_Review
+  Date           : 2025-09-06 03:32:00  |  Off-hours: True  |  Regression: True
+  Operator       : Charles Patel <charles.patel@company.com>
+  Approver       : Mark Hernandez
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST SC-7, CIS 12.1, PCI-DSS 12.10
+  Description    : Modify performed on Control-3 (Network_Segmentation) at 03:32 AM on 2025-09-06 during off-hours (00:00–07:00, suspicious window), reverting a security control from enabled to disabled (regression). Change reason stated: ...
+  Remediation    : 1. Revert network segmentation rules. 2. Verify VLAN/subnet isolation is intact. 3. Review east-west traffic logs for anomalies.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0023 — ALT-952  |  Risk Score: 105
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00952
+  Control        : Control-5 (Logging)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Disable  |  Status: Drifted
+  Date           : 2025-09-23 15:14:00  |  Off-hours: False  |  Regression: False
+  Operator       : George Young <george.young@company.com>
+  Approver       : Aisha Pillai
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST AU-2, CIS 2.1, NIST SI-12, GDPR Article 32
+  Description    : Disable performed on Control-5 (Logging) at 03:14 PM on 2025-09-23. Change reason stated: 'Policy Change'. Current remediation status: Drifted. Risk score: 105 → classified as CRITICAL DRIFT. Business impact: Loss of aud...
+  Remediation    : 1. Immediately re-enable logging via console/API. 2. Audit all API calls during the blind window. 3. Escalate to CISO and SIEM team. 4. File change ticket with root-cause explanation.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0024 — ALT-622  |  Risk Score: 105
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00622
+  Control        : Control-18 (Firewall)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Disable  |  Status: Drifted
+  Date           : 2025-11-08 15:16:00  |  Off-hours: False  |  Regression: False
+  Operator       : Anthony Choi <anthony.choi@company.com>
+  Approver       : Vikram Menon
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : CIS 3.1, NIST AC-4, GDPR Article 32
+  Description    : Disable performed on Control-18 (Firewall) at 03:16 PM on 2025-11-08. Change reason stated: 'Performance Tuning'. Current remediation status: Drifted. Risk score: 105 → classified as CRITICAL DRIFT. Business impact: Netw...
+  Remediation    : 1. Re-enable firewall rules. 2. Perform full traffic review for the exposure window. 3. Check IDS/IPS for alerts during the gap.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0025 — ALT-423  |  Risk Score: 105
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00423
+  Control        : Control-86 (Endpoint)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Remove  |  Status: Under_Review
+  Date           : 2026-02-13 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Meera Robinson <meera.robinson@company.com>
+  Approver       : Amitabh Verma
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST SI-3, CIS 8.1
+  Description    : Remove performed on Control-86 (Endpoint) at 10:54 AM on 2026-02-13, reverting a security control from enabled to disabled (regression). Change reason stated: 'Emergency Fix'. Current remediation status: Under Review. Ri...
+  Remediation    : 1. Reinstall endpoint protection agent. 2. Quarantine affected endpoints. 3. Initiate incident response if IOCs found.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0026 — ALT-354  |  Risk Score: 105
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00354
+  Control        : Control-67 (DLP)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Update  |  Status: Drifted
+  Date           : 2026-02-13 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Edward Brown <edward.brown@company.com>
+  Approver       : Timothy Lee
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : GDPR 25, ISO 27001 A.13
+  Description    : Update performed on Control-67 (DLP) at 10:54 AM on 2026-02-13, reverting a security control from enabled to disabled (regression). Change reason stated: 'Performance Tuning'. Current remediation status: Drifted. Risk sc...
+  Remediation    : 1. Restore DLP baseline policy. 2. Scan for data exfiltration during gap window. 3. Notify Compliance.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0027 — ALT-163  |  Risk Score: 105
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00163
+  Control        : Control-32 (Network_Segmentation)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Update  |  Status: Drifted
+  Date           : 2026-04-14 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Ryan Lee <ryan.lee@company.com>
+  Approver       : Nisha Singh
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST SC-7, CIS 12.1
+  Description    : Update performed on Control-32 (Network_Segmentation) at 10:54 AM on 2026-04-14, reverting a security control from enabled to disabled (regression). Change reason stated: 'Policy Change'. Current remediation status: Drif...
+  Remediation    : 1. Restore network segmentation baseline. 2. Validate micro-segmentation policies. 3. Review inter-VLAN routing tables.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0028 — ALT-456  |  Risk Score: 105
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00456
+  Control        : Control-42 (Logging)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Disable  |  Status: Drifted
+  Date           : 2026-04-16 10:54:40  |  Off-hours: False  |  Regression: False
+  Operator       : Donald Iyer <donald.iyer@company.com>
+  Approver       : Anjali Thompson
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST AU-2, CIS 2.1, NIST SI-12
+  Description    : Disable performed on Control-42 (Logging) at 10:54 AM on 2026-04-16. Change reason stated: 'Security Update'. Current remediation status: Drifted. Risk score: 105 → classified as CRITICAL DRIFT. Business impact: Loss of ...
+  Remediation    : 1. Immediately re-enable logging via console/API. 2. Audit all API calls during the blind window. 3. Escalate to CISO and SIEM team. 4. File change ticket with root-cause explanation.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0029 — ALT-708  |  Risk Score: 100
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00708
+  Control        : Control-57 (Data_Protection)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Update  |  Status: Under_Review
+  Date           : 2025-06-23 04:02:00  |  Off-hours: True  |  Regression: True
+  Operator       : Arjun Becker <arjun.becker@company.com>
+  Approver       : Leila Gupta
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : GDPR 32, PCI-DSS 3.4, ISO 27001 A.12
+  Description    : Update performed on Control-57 (Data_Protection) at 04:02 AM on 2025-06-23 during off-hours (00:00–07:00, suspicious window), reverting a security control from enabled to disabled (regression). Change reason stated: 'Tro...
+  Remediation    : 1. Restore data protection baseline. 2. Audit data handling during exposure window. 3. Review retention and access policies.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0030 — ALT-979  |  Risk Score: 100
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00979
+  Control        : Control-3 (Logging)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Disable  |  Status: Under_Review
+  Date           : 2025-07-10 05:46:00  |  Off-hours: True  |  Regression: False
+  Operator       : Varun Reilly <varun.reilly@company.com>
+  Approver       : Priya Thomas
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST AU-2, CIS 2.1, NIST SI-12, CIS Benchmark v8
+  Description    : Disable performed on Control-3 (Logging) at 05:46 AM on 2025-07-10 during off-hours (00:00–07:00, suspicious window). Change reason stated: 'Policy Change'. Current remediation status: Under Review. Risk score: 100 → cla...
+  Remediation    : 1. Immediately re-enable logging via console/API. 2. Audit all API calls during the blind window. 3. Escalate to CISO and SIEM team. 4. File change ticket with root-cause explanation.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0031 — ALT-836  |  Risk Score: 100
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00836
+  Control        : Control-90 (Endpoint)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Remove  |  Status: Drifted
+  Date           : 2025-09-27 17:37:00  |  Off-hours: False  |  Regression: False
+  Operator       : Stephen Bhat <stephen.bhat@company.com>
+  Approver       : Stephen Guo
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST SI-3, CIS 8.1, CIS Benchmark v8
+  Description    : Remove performed on Control-90 (Endpoint) at 05:37 PM on 2025-09-27. Change reason stated: 'Policy Change'. Current remediation status: Drifted. Risk score: 100 → classified as CRITICAL DRIFT. Business impact: Endpoints ...
+  Remediation    : 1. Reinstall endpoint protection agent. 2. Quarantine affected endpoints. 3. Initiate incident response if IOCs found.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0032 — ALT-652  |  Risk Score: 100
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00652
+  Control        : Control-68 (Network_Segmentation)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Rollback  |  Status: Drifted
+  Date           : 2025-12-05 14:45:00  |  Off-hours: False  |  Regression: True
+  Operator       : Paul Reilly <paul.reilly@company.com>
+  Approver       : David Liu
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST SC-7, CIS 12.1, ISO 27001 A.12
+  Description    : Rollback performed on Control-68 (Network_Segmentation) at 02:45 PM on 2025-12-05, reverting a security control from enabled to disabled (regression). Change reason stated: 'Performance Tuning'. Current remediation statu...
+  Remediation    : 1. Restore network segmentation baseline. 2. Validate micro-segmentation policies. 3. Review inter-VLAN routing tables.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0033 — ALT-439  |  Risk Score: 100
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00439
+  Control        : Control-17 (Access_Control)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Disable  |  Status: Under_Review
+  Date           : 2026-02-04 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Robert Perez <robert.perez@company.com>
+  Approver       : Timothy Williams
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST IA-2, CIS 5.3
+  Description    : Disable performed on Control-17 (Access_Control) at 10:54 AM on 2026-02-04, reverting a security control from enabled to disabled (regression). Change reason stated: 'Security Update'. Current remediation status: Under R...
+  Remediation    : 1. Re-enable access controls immediately. 2. Audit all access logs during the gap. 3. Force re-authentication for all admin sessions. 4. Review privileged access grants.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0034 — ALT-273  |  Risk Score: 100
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00273
+  Control        : Control-21 (Cloud_Security)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Remove  |  Status: Drifted
+  Date           : 2026-02-17 10:54:40  |  Off-hours: False  |  Regression: False
+  Operator       : Raja Davis <raja.davis@company.com>
+  Approver       : James Gupta
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : CIS 2.1, NIST CM-2
+  Description    : Remove performed on Control-21 (Cloud_Security) at 10:54 AM on 2026-02-17. Change reason stated: 'Performance Tuning'. Current remediation status: Drifted. Risk score: 100 → classified as CRITICAL DRIFT. Business impact:...
+  Remediation    : 1. Restore cloud security baseline. 2. Run cloud posture scan (CSPM tool). 3. Review misconfigurations in all accounts.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0035 — ALT-421  |  Risk Score: 100
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00421
+  Control        : Control-90 (Firewall)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Rollback  |  Status: Drifted
+  Date           : 2026-03-10 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Charles Clark <charles.clark@company.com>
+  Approver       : Andrew Das
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : CIS 3.1, NIST AC-4
+  Description    : Rollback performed on Control-90 (Firewall) at 10:54 AM on 2026-03-10, reverting a security control from enabled to disabled (regression). Change reason stated: 'Troubleshooting'. Current remediation status: Drifted. Ris...
+  Remediation    : 1. Restore firewall to baseline configuration. 2. Review traffic logs for anomalies. 3. Validate threat-prevention policies.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0036 — ALT-281  |  Risk Score: 100
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00281
+  Control        : Control-20 (Network_Segmentation)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Disable  |  Status: Under_Review
+  Date           : 2026-03-12 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Sanjana Sanchez <sanjana.sanchez@company.com>
+  Approver       : Anjali Menon
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST SC-7, CIS 12.1
+  Description    : Disable performed on Control-20 (Network_Segmentation) at 10:54 AM on 2026-03-12, reverting a security control from enabled to disabled (regression). Change reason stated: 'Policy Change'. Current remediation status: Und...
+  Remediation    : 1. Re-enable segmentation controls immediately. 2. Check for lateral movement indicators. 3. Rebuild firewall zone policies if needed.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0037 — ALT-123  |  Risk Score: 100
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00123
+  Control        : Control-2 (Firewall)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Disable  |  Status: Under_Review
+  Date           : 2026-03-16 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Raja Sharma <raja.sharma@company.com>
+  Approver       : Aisha Thomas
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : CIS 3.1, NIST AC-4
+  Description    : Disable performed on Control-2 (Firewall) at 10:54 AM on 2026-03-16, reverting a security control from enabled to disabled (regression). Change reason stated: 'Troubleshooting'. Current remediation status: Under Review. ...
+  Remediation    : 1. Re-enable firewall rules. 2. Perform full traffic review for the exposure window. 3. Check IDS/IPS for alerts during the gap.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0038 — ALT-902  |  Risk Score: 95
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00902
+  Control        : Control-71 (Cloud_Security)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Remove  |  Status: Under_Review
+  Date           : 2025-06-07 02:30:00  |  Off-hours: True  |  Regression: False
+  Operator       : Arjun Sun <arjun.sun@company.com>
+  Approver       : Donald Young
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : CIS 2.1, NIST CM-2, NIST CM-3
+  Description    : Remove performed on Control-71 (Cloud_Security) at 02:30 AM on 2025-06-07 during off-hours (00:00–07:00, suspicious window). Change reason stated: 'Emergency Fix'. Current remediation status: Under Review. Risk score: 95...
+  Remediation    : 1. Restore cloud security baseline. 2. Run cloud posture scan (CSPM tool). 3. Review misconfigurations in all accounts.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0039 — ALT-596  |  Risk Score: 95
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00596
+  Control        : Control-98 (Endpoint)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Disable  |  Status: Drifted
+  Date           : 2025-08-23 10:41:00  |  Off-hours: False  |  Regression: False
+  Operator       : Charles Meyer <charles.meyer@company.com>
+  Approver       : Raja Reddy
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST SI-3, CIS 8.1
+  Description    : Disable performed on Control-98 (Endpoint) at 10:41 AM on 2025-08-23. Change reason stated: 'Policy Change'. Current remediation status: Drifted. Risk score: 95 → classified as CRITICAL DRIFT. Business impact: Endpoints ...
+  Remediation    : 1. Re-enable endpoint protection agent. 2. Run full AV/EDR scan on affected endpoints. 3. Review endpoint logs for indicators of compromise.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0040 — ALT-356  |  Risk Score: 95
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00356
+  Control        : Control-18 (Endpoint)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Enable  |  Status: Drifted
+  Date           : 2026-02-11 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Sanjana Thompson <sanjana.thompson@company.com>
+  Approver       : Brian Garcia
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST SI-3, CIS 8.1
+  Description    : Enable performed on Control-18 (Endpoint) at 10:54 AM on 2026-02-11, reverting a security control from enabled to disabled (regression). Change reason stated: 'Troubleshooting'. Current remediation status: Drifted. Risk ...
+  Remediation    : 1. Restore endpoint security baseline. 2. Force agent update on all managed endpoints. 3. Validate EDR telemetry.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0041 — ALT-234  |  Risk Score: 95
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00234
+  Control        : Control-85 (Logging)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Modify  |  Status: Under_Review
+  Date           : 2026-03-12 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Isha Garcia <isha.garcia@company.com>
+  Approver       : Ryan Martinez
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST AU-2, CIS 2.1, NIST SI-12
+  Description    : Modify performed on Control-85 (Logging) at 10:54 AM on 2026-03-12, reverting a security control from enabled to disabled (regression). Change reason stated: 'Policy Change'. Current remediation status: Under Review. Ris...
+  Remediation    : 1. Revert logging configuration to baseline. 2. Verify log ingestion in SIEM. 3. Review recent log gaps for anomalies.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0042 — ALT-388  |  Risk Score: 95
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00388
+  Control        : Control-65 (Logging)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Modify  |  Status: Under_Review
+  Date           : 2026-03-26 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Jason Thomas <jason.thomas@company.com>
+  Approver       : Gary Reddy
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST AU-2, CIS 2.1, NIST SI-12
+  Description    : Modify performed on Control-65 (Logging) at 10:54 AM on 2026-03-26, reverting a security control from enabled to disabled (regression). Change reason stated: 'Troubleshooting'. Current remediation status: Under Review. R...
+  Remediation    : 1. Revert logging configuration to baseline. 2. Verify log ingestion in SIEM. 3. Review recent log gaps for anomalies.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0043 — ALT-405  |  Risk Score: 95
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00405
+  Control        : Control-34 (DLP)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Enable  |  Status: Drifted
+  Date           : 2026-04-09 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Andrew Wilson <andrew.wilson@company.com>
+  Approver       : Xiulan Martinez
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : GDPR 25, ISO 27001 A.13
+  Description    : Enable performed on Control-34 (DLP) at 10:54 AM on 2026-04-09, reverting a security control from enabled to disabled (regression). Change reason stated: 'Troubleshooting'. Current remediation status: Drifted. Risk score...
+  Remediation    : 1. Restore DLP baseline policy. 2. Scan for data exfiltration during gap window. 3. Notify Compliance.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0044 — ALT-972  |  Risk Score: 90
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00972
+  Control        : Control-80 (Firewall)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Update  |  Status: Under_Review
+  Date           : 2025-07-18 05:24:00  |  Off-hours: True  |  Regression: True
+  Operator       : Neha Lewis <neha.lewis@company.com>
+  Approver       : Jeffrey Ghosh
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : CIS 3.1, NIST AC-4
+  Description    : Update performed on Control-80 (Firewall) at 05:24 AM on 2025-07-18 during off-hours (00:00–07:00, suspicious window), reverting a security control from enabled to disabled (regression). Change reason stated: 'Emergency ...
+  Remediation    : 1. Restore firewall to baseline configuration. 2. Review traffic logs for anomalies. 3. Validate threat-prevention policies.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0045 — ALT-817  |  Risk Score: 90
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00817
+  Control        : Control-23 (Vulnerability)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Update  |  Status: Under_Review
+  Date           : 2025-09-12 17:09:00  |  Off-hours: False  |  Regression: True
+  Operator       : Xiulan Sun <xiulan.sun@company.com>
+  Approver       : Priya Martinez
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST RA-5, CIS 7.1, NIST CM-3
+  Description    : Update performed on Control-23 (Vulnerability) at 05:09 PM on 2025-09-12, reverting a security control from enabled to disabled (regression). Change reason stated: 'Troubleshooting'. Current remediation status: Under Rev...
+  Remediation    : 1. Restore vulnerability management baseline. 2. Run immediate scan on affected scope. 3. Prioritise critical CVEs for patching.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0046 — ALT-429  |  Risk Score: 90
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00429
+  Control        : Control-65 (Cloud_Security)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Modify  |  Status: Drifted
+  Date           : 2026-02-23 10:54:40  |  Off-hours: False  |  Regression: False
+  Operator       : Daniel Moore <daniel.moore@company.com>
+  Approver       : Edward Garcia
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : CIS 2.1, NIST CM-2
+  Description    : Modify performed on Control-65 (Cloud_Security) at 10:54 AM on 2026-02-23. Change reason stated: 'Troubleshooting'. Current remediation status: Drifted. Risk score: 90 → classified as CRITICAL DRIFT. Business impact: Clo...
+  Remediation    : 1. Revert cloud policy to IaC-defined baseline. 2. Trigger Terraform plan to detect drift. 3. Validate policy enforcement across all regions.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0047 — ALT-485  |  Risk Score: 90
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00485
+  Control        : Control-76 (Data_Protection)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Update  |  Status: Under_Review
+  Date           : 2026-02-23 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Joseph Jackson <joseph.jackson@company.com>
+  Approver       : Fatima Harris
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : GDPR 32, PCI-DSS 3.4
+  Description    : Update performed on Control-76 (Data_Protection) at 10:54 AM on 2026-02-23, reverting a security control from enabled to disabled (regression). Change reason stated: 'Troubleshooting'. Current remediation status: Under R...
+  Remediation    : 1. Restore data protection baseline. 2. Audit data handling during exposure window. 3. Review retention and access policies.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0048 — ALT-213  |  Risk Score: 90
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00213
+  Control        : Control-84 (Cloud_Security)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Update  |  Status: Under_Review
+  Date           : 2026-03-27 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Richard Taylor <richard.taylor@company.com>
+  Approver       : Nisha Bhat
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : CIS 2.1, NIST CM-2
+  Description    : Update performed on Control-84 (Cloud_Security) at 10:54 AM on 2026-03-27, reverting a security control from enabled to disabled (regression). Change reason stated: 'Emergency Fix'. Current remediation status: Under Revi...
+  Remediation    : 1. Restore cloud security baseline. 2. Run cloud posture scan (CSPM tool). 3. Review misconfigurations in all accounts.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0049 — ALT-326  |  Risk Score: 90
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00326
+  Control        : Control-88 (Firewall)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Rollback  |  Status: Drifted
+  Date           : 2026-04-19 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Jason Patel <jason.patel@company.com>
+  Approver       : Harsh Martinez
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : CIS 3.1, NIST AC-4
+  Description    : Rollback performed on Control-88 (Firewall) at 10:54 AM on 2026-04-19, reverting a security control from enabled to disabled (regression). Change reason stated: 'Troubleshooting'. Current remediation status: Drifted. Ris...
+  Remediation    : 1. Restore firewall to baseline configuration. 2. Review traffic logs for anomalies. 3. Validate threat-prevention policies.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0050 — ALT-969  |  Risk Score: 85
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00969
+  Control        : Control-59 (Network_Segmentation)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Update  |  Status: Drifted
+  Date           : 2025-06-18 17:33:00  |  Off-hours: False  |  Regression: False
+  Operator       : Thomas Hwang <thomas.hwang@company.com>
+  Approver       : Raja Burke
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST SC-7, CIS 12.1, CIS Benchmark v8
+  Description    : Update performed on Control-59 (Network_Segmentation) at 05:33 PM on 2025-06-18. Change reason stated: 'Security Update'. Current remediation status: Drifted. Risk score: 85 → classified as CRITICAL DRIFT. Business impac...
+  Remediation    : 1. Restore network segmentation baseline. 2. Validate micro-segmentation policies. 3. Review inter-VLAN routing tables.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0051 — ALT-904  |  Risk Score: 85
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00904
+  Control        : Control-39 (Firewall)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Rollback  |  Status: Under_Review
+  Date           : 2025-07-10 22:15:00  |  Off-hours: False  |  Regression: True
+  Operator       : Meera Kelly <meera.kelly@company.com>
+  Approver       : Anthony Schneider
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : CIS 3.1, NIST AC-4, PCI-DSS 12.10
+  Description    : Rollback performed on Control-39 (Firewall) at 10:15 PM on 2025-07-10, reverting a security control from enabled to disabled (regression). Change reason stated: 'Policy Change'. Current remediation status: Under Review. ...
+  Remediation    : 1. Restore firewall to baseline configuration. 2. Review traffic logs for anomalies. 3. Validate threat-prevention policies.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0052 — ALT-827  |  Risk Score: 85
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00827
+  Control        : Control-29 (Cloud_Security)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Update  |  Status: Drifted
+  Date           : 2025-08-24 23:32:00  |  Off-hours: False  |  Regression: False
+  Operator       : Vikram Miller <vikram.miller@company.com>
+  Approver       : Vikram Weber
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : CIS 2.1, NIST CM-2, NIST CM-3
+  Description    : Update performed on Control-29 (Cloud_Security) at 11:32 PM on 2025-08-24. Change reason stated: 'Performance Tuning'. Current remediation status: Drifted. Risk score: 85 → classified as CRITICAL DRIFT. Business impact: ...
+  Remediation    : 1. Restore cloud security baseline. 2. Run cloud posture scan (CSPM tool). 3. Review misconfigurations in all accounts.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0053 — ALT-570  |  Risk Score: 85
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00570
+  Control        : Control-52 (Firewall)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Remove  |  Status: Under_Review
+  Date           : 2025-08-30 13:46:00  |  Off-hours: False  |  Regression: False
+  Operator       : Meera Muller <meera.muller@company.com>
+  Approver       : Aditya Johnson
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : CIS 3.1, NIST AC-4, ISO 27001 A.12
+  Description    : Remove performed on Control-52 (Firewall) at 01:46 PM on 2025-08-30. Change reason stated: 'Policy Change'. Current remediation status: Under Review. Risk score: 85 → classified as CRITICAL DRIFT. Business impact: Networ...
+  Remediation    : 1. Restore firewall to baseline configuration. 2. Review traffic logs for anomalies. 3. Validate threat-prevention policies.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0054 — ALT-688  |  Risk Score: 85
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00688
+  Control        : Control-23 (Firewall)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Rollback  |  Status: Under_Review
+  Date           : 2025-09-21 15:27:00  |  Off-hours: False  |  Regression: True
+  Operator       : Richard Williams <richard.williams@company.com>
+  Approver       : George Clark
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : CIS 3.1, NIST AC-4, ISO 27001 A.12
+  Description    : Rollback performed on Control-23 (Firewall) at 03:27 PM on 2025-09-21, reverting a security control from enabled to disabled (regression). Change reason stated: 'Troubleshooting'. Current remediation status: Under Review...
+  Remediation    : 1. Restore firewall to baseline configuration. 2. Review traffic logs for anomalies. 3. Validate threat-prevention policies.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0055 — ALT-779  |  Risk Score: 85
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00779
+  Control        : Control-50 (Access_Control)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Rollback  |  Status: Under_Review
+  Date           : 2025-10-04 18:53:00  |  Off-hours: False  |  Regression: True
+  Operator       : Amitabh Das <amitabh.das@company.com>
+  Approver       : David Martin
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST IA-2, CIS 5.3, ISO 27001 A.12
+  Description    : Rollback performed on Control-50 (Access_Control) at 06:53 PM on 2025-10-04, reverting a security control from enabled to disabled (regression). Change reason stated: 'Performance Tuning'. Current remediation status: Und...
+  Remediation    : 1. Restore access control baseline. 2. Review access logs for anomalous activity. 3. Enforce re-authentication.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0056 — ALT-999  |  Risk Score: 85
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00999
+  Control        : Control-61 (Logging)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Remove  |  Status: Under_Review
+  Date           : 2025-10-25 18:56:00  |  Off-hours: False  |  Regression: False
+  Operator       : Isha Hwang <isha.hwang@company.com>
+  Approver       : Sanjana Jackson
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST AU-2, CIS 2.1, NIST SI-12, ISO 27001 A.12
+  Description    : Remove performed on Control-61 (Logging) at 06:56 PM on 2025-10-25. Change reason stated: 'Security Update'. Current remediation status: Under Review. Risk score: 85 → classified as CRITICAL DRIFT. Business impact: Loss ...
+  Remediation    : 1. Restore logging agent/service. 2. Perform forensic analysis of the gap period. 3. Notify Compliance team.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0057 — ALT-719  |  Risk Score: 85
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00719
+  Control        : Control-70 (Cloud_Security)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Rollback  |  Status: Under_Review
+  Date           : 2025-10-29 00:21:00  |  Off-hours: True  |  Regression: True
+  Operator       : Nadia Patel <nadia.patel@company.com>
+  Approver       : Christopher Chen
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : CIS 2.1, NIST CM-2
+  Description    : Rollback performed on Control-70 (Cloud_Security) at 12:21 AM on 2025-10-29 during off-hours (00:00–07:00, suspicious window), reverting a security control from enabled to disabled (regression). Change reason stated: 'Se...
+  Remediation    : 1. Restore cloud security baseline. 2. Run cloud posture scan (CSPM tool). 3. Review misconfigurations in all accounts.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0058 — ALT-612  |  Risk Score: 85
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00612
+  Control        : Control-92 (Cloud_Security)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Rollback  |  Status: Under_Review
+  Date           : 2025-12-20 18:33:00  |  Off-hours: False  |  Regression: True
+  Operator       : Aisha Das <aisha.das@company.com>
+  Approver       : Christopher Becker
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : CIS 2.1, NIST CM-2, GDPR Article 32
+  Description    : Rollback performed on Control-92 (Cloud_Security) at 06:33 PM on 2025-12-20, reverting a security control from enabled to disabled (regression). Change reason stated: 'Performance Tuning'. Current remediation status: Und...
+  Remediation    : 1. Restore cloud security baseline. 2. Run cloud posture scan (CSPM tool). 3. Review misconfigurations in all accounts.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0059 — ALT-954  |  Risk Score: 85
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00954
+  Control        : Control-50 (DLP)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Update  |  Status: Drifted
+  Date           : 2025-12-27 21:14:00  |  Off-hours: False  |  Regression: False
+  Operator       : Amara Garcia <amara.garcia@company.com>
+  Approver       : Priya Li
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : GDPR 25, ISO 27001 A.13, GDPR Article 32
+  Description    : Update performed on Control-50 (DLP) at 09:14 PM on 2025-12-27. Change reason stated: 'Policy Change'. Current remediation status: Drifted. Risk score: 85 → classified as CRITICAL DRIFT. Business impact: Sensitive data (...
+  Remediation    : 1. Restore DLP baseline policy. 2. Scan for data exfiltration during gap window. 3. Notify Compliance.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0060 — ALT-204  |  Risk Score: 85
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00204
+  Control        : Control-8 (Vulnerability)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Rollback  |  Status: Under_Review
+  Date           : 2026-03-05 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Shruti Robinson <shruti.robinson@company.com>
+  Approver       : Ryan Robinson
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST RA-5, CIS 7.1
+  Description    : Rollback performed on Control-8 (Vulnerability) at 10:54 AM on 2026-03-05, reverting a security control from enabled to disabled (regression). Change reason stated: 'Security Update'. Current remediation status: Under Re...
+  Remediation    : 1. Restore vulnerability management baseline. 2. Run immediate scan on affected scope. 3. Prioritise critical CVEs for patching.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0061 — ALT-41  |  Risk Score: 85
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00041
+  Control        : Control-56 (Endpoint)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Update  |  Status: Drifted
+  Date           : 2026-03-27 10:54:40  |  Off-hours: False  |  Regression: False
+  Operator       : Andrew Garcia <andrew.garcia@company.com>
+  Approver       : Stephen Bhat
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST SI-3, CIS 8.1
+  Description    : Update performed on Control-56 (Endpoint) at 10:54 AM on 2026-03-27. Change reason stated: 'Security Update'. Current remediation status: Drifted. Risk score: 85 → classified as CRITICAL DRIFT. Business impact: Endpoints...
+  Remediation    : 1. Restore endpoint security baseline. 2. Force agent update on all managed endpoints. 3. Validate EDR telemetry.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0062 — ALT-385  |  Risk Score: 85
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00385
+  Control        : Control-38 (Network_Segmentation)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Enable  |  Status: Drifted
+  Date           : 2026-04-01 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : William Bhat <william.bhat@company.com>
+  Approver       : Arjun Garcia
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST SC-7, CIS 12.1
+  Description    : Enable performed on Control-38 (Network_Segmentation) at 10:54 AM on 2026-04-01, reverting a security control from enabled to disabled (regression). Change reason stated: 'Troubleshooting'. Current remediation status: Dr...
+  Remediation    : 1. Restore network segmentation baseline. 2. Validate micro-segmentation policies. 3. Review inter-VLAN routing tables.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0063 — ALT-136  |  Risk Score: 85
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00136
+  Control        : Control-25 (Encryption)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Rollback  |  Status: Under_Review
+  Date           : 2026-04-11 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Maria Sharma <maria.sharma@company.com>
+  Approver       : Sophia Moore
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : GDPR 32, NIST SC-7, PCI-DSS 3.4
+  Description    : Rollback performed on Control-25 (Encryption) at 10:54 AM on 2026-04-11, reverting a security control from enabled to disabled (regression). Change reason stated: 'Emergency Fix'. Current remediation status: Under Review...
+  Remediation    : 1. Restore encryption baseline. 2. Rotate affected encryption keys. 3. Validate re-encryption of data at rest.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0064 — ALT-920  |  Risk Score: 80
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00920
+  Control        : Control-5 (Firewall)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Update  |  Status: Under_Review
+  Date           : 2025-11-24 22:56:00  |  Off-hours: False  |  Regression: True
+  Operator       : Timothy He <timothy.he@company.com>
+  Approver       : Nadia Schneider
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : CIS 3.1, NIST AC-4
+  Description    : Update performed on Control-5 (Firewall) at 10:56 PM on 2025-11-24, reverting a security control from enabled to disabled (regression). Change reason stated: 'Security Update'. Current remediation status: Under Review. R...
+  Remediation    : 1. Restore firewall to baseline configuration. 2. Review traffic logs for anomalies. 3. Validate threat-prevention policies.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0065 — ALT-386  |  Risk Score: 80
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00386
+  Control        : Control-41 (Vulnerability)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Rollback  |  Status: Drifted
+  Date           : 2026-01-27 10:54:40  |  Off-hours: False  |  Regression: False
+  Operator       : Aditya Robinson <aditya.robinson@company.com>
+  Approver       : Nadia Hernandez
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST RA-5, CIS 7.1
+  Description    : Rollback performed on Control-41 (Vulnerability) at 10:54 AM on 2026-01-27. Change reason stated: 'Performance Tuning'. Current remediation status: Drifted. Risk score: 80 → classified as CRITICAL DRIFT. Business impact:...
+  Remediation    : 1. Restore vulnerability management baseline. 2. Run immediate scan on affected scope. 3. Prioritise critical CVEs for patching.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0066 — ALT-742  |  Risk Score: 75
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00742
+  Control        : Control-38 (Data_Protection)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Remove  |  Status: Under_Review
+  Date           : 2025-08-26 22:02:00  |  Off-hours: False  |  Regression: False
+  Operator       : Harsh Martin <harsh.martin@company.com>
+  Approver       : Karan Verma
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : GDPR 32, PCI-DSS 3.4
+  Description    : Remove performed on Control-38 (Data_Protection) at 10:02 PM on 2025-08-26. Change reason stated: 'Emergency Fix'. Current remediation status: Under Review. Risk score: 75 → classified as CRITICAL DRIFT. Business impact:...
+  Remediation    : 1. Restore data protection policy. 2. Perform data inventory audit. 3. Escalate to Legal/Compliance.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0067 — ALT-546  |  Risk Score: 75
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00546
+  Control        : Control-16 (Vulnerability)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Rollback  |  Status: Under_Review
+  Date           : 2025-09-09 03:51:00  |  Off-hours: True  |  Regression: False
+  Operator       : Akshay Lim <akshay.lim@company.com>
+  Approver       : Eric Patel
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST RA-5, CIS 7.1, ISO 27001 A.12
+  Description    : Rollback performed on Control-16 (Vulnerability) at 03:51 AM on 2025-09-09 during off-hours (00:00–07:00, suspicious window). Change reason stated: 'Performance Tuning'. Current remediation status: Under Review. Risk sco...
+  Remediation    : 1. Restore vulnerability management baseline. 2. Run immediate scan on affected scope. 3. Prioritise critical CVEs for patching.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0068 — ALT-799  |  Risk Score: 75
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00799
+  Control        : Control-99 (Cloud_Security)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Rollback  |  Status: Under_Review
+  Date           : 2025-11-18 02:01:00  |  Off-hours: True  |  Regression: False
+  Operator       : Larry Johnson <larry.johnson@company.com>
+  Approver       : Fatima Iyer
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : CIS 2.1, NIST CM-2, GDPR Article 32
+  Description    : Rollback performed on Control-99 (Cloud_Security) at 02:01 AM on 2025-11-18 during off-hours (00:00–07:00, suspicious window). Change reason stated: 'Performance Tuning'. Current remediation status: Under Review. Risk sc...
+  Remediation    : 1. Restore cloud security baseline. 2. Run cloud posture scan (CSPM tool). 3. Review misconfigurations in all accounts.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0069 — ALT-866  |  Risk Score: 75
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00866
+  Control        : Control-83 (Logging)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Enable  |  Status: Drifted
+  Date           : 2025-12-01 19:25:00  |  Off-hours: False  |  Regression: False
+  Operator       : Xiulan Kang <xiulan.kang@company.com>
+  Approver       : Deepika Han
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST AU-2, CIS 2.1, NIST SI-12, CIS Benchmark v8
+  Description    : Enable performed on Control-83 (Logging) at 07:25 PM on 2025-12-01. Change reason stated: 'Performance Tuning'. Current remediation status: Drifted. Risk score: 75 → classified as CRITICAL DRIFT. Business impact: Loss of...
+  Remediation    : 1. Restore logging to baseline configuration. 2. Validate log completeness in SIEM. 3. Review recent activity for anomalies.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0070 — ALT-803  |  Risk Score: 75
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00803
+  Control        : Control-76 (Data_Protection)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Remove  |  Status: Under_Review
+  Date           : 2025-12-30 12:05:00  |  Off-hours: False  |  Regression: False
+  Operator       : Stephen Harris <stephen.harris@company.com>
+  Approver       : George Ramirez
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : GDPR 32, PCI-DSS 3.4
+  Description    : Remove performed on Control-76 (Data_Protection) at 12:05 PM on 2025-12-30. Change reason stated: 'Security Update'. Current remediation status: Under Review. Risk score: 75 → classified as CRITICAL DRIFT. Business impac...
+  Remediation    : 1. Restore data protection policy. 2. Perform data inventory audit. 3. Escalate to Legal/Compliance.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0071 — ALT-42  |  Risk Score: 75
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00042
+  Control        : Control-49 (Firewall)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Modify  |  Status: Under_Review
+  Date           : 2026-01-25 10:54:40  |  Off-hours: False  |  Regression: False
+  Operator       : Richard Lee <richard.lee@company.com>
+  Approver       : Zainab Harris
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : CIS 3.1, NIST AC-4
+  Description    : Modify performed on Control-49 (Firewall) at 10:54 AM on 2026-01-25. Change reason stated: 'Emergency Fix'. Current remediation status: Under Review. Risk score: 75 → classified as CRITICAL DRIFT. Business impact: Networ...
+  Remediation    : 1. Revert to baseline allowed-port list. 2. Block any newly opened ports immediately. 3. Run traffic analysis to detect exploitation. 4. Update firewall change management log.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0072 — ALT-221  |  Risk Score: 75
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00221
+  Control        : Control-25 (Vulnerability)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Modify  |  Status: Under_Review
+  Date           : 2026-02-09 10:54:40  |  Off-hours: False  |  Regression: False
+  Operator       : Nadia Pillai <nadia.pillai@company.com>
+  Approver       : Charles Sanchez
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST RA-5, CIS 7.1
+  Description    : Modify performed on Control-25 (Vulnerability) at 10:54 AM on 2026-02-09. Change reason stated: 'Emergency Fix'. Current remediation status: Under Review. Risk score: 75 → classified as CRITICAL DRIFT. Business impact: K...
+  Remediation    : 1. Restore vulnerability management baseline. 2. Run immediate scan on affected scope. 3. Prioritise critical CVEs for patching.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0073 — ALT-105  |  Risk Score: 75
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00105
+  Control        : Control-3 (DLP)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Rollback  |  Status: Under_Review
+  Date           : 2026-02-22 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : David Hernandez <david.hernandez@company.com>
+  Approver       : Priya Garcia
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : GDPR 25, ISO 27001 A.13
+  Description    : Rollback performed on Control-3 (DLP) at 10:54 AM on 2026-02-22, reverting a security control from enabled to disabled (regression). Change reason stated: 'Policy Change'. Current remediation status: Under Review. Risk s...
+  Remediation    : 1. Restore DLP baseline policy. 2. Scan for data exfiltration during gap window. 3. Notify Compliance.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0074 — ALT-179  |  Risk Score: 75
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00179
+  Control        : Control-14 (Network_Segmentation)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Update  |  Status: Drifted
+  Date           : 2026-04-02 10:54:40  |  Off-hours: False  |  Regression: False
+  Operator       : George Miller <george.miller@company.com>
+  Approver       : Nicholas Rodriguez
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST SC-7, CIS 12.1
+  Description    : Update performed on Control-14 (Network_Segmentation) at 10:54 AM on 2026-04-02. Change reason stated: 'Security Update'. Current remediation status: Drifted. Risk score: 75 → classified as CRITICAL DRIFT. Business impac...
+  Remediation    : 1. Restore network segmentation baseline. 2. Validate micro-segmentation policies. 3. Review inter-VLAN routing tables.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0075 — ALT-47  |  Risk Score: 75
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00047
+  Control        : Control-77 (Cloud_Security)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Modify  |  Status: Under_Review
+  Date           : 2026-04-15 10:54:40  |  Off-hours: False  |  Regression: False
+  Operator       : Charles Martin <charles.martin@company.com>
+  Approver       : Stephen Kumar
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : CIS 2.1, NIST CM-2
+  Description    : Modify performed on Control-77 (Cloud_Security) at 10:54 AM on 2026-04-15. Change reason stated: 'Policy Change'. Current remediation status: Under Review. Risk score: 75 → classified as CRITICAL DRIFT. Business impact: ...
+  Remediation    : 1. Revert cloud policy to IaC-defined baseline. 2. Trigger Terraform plan to detect drift. 3. Validate policy enforcement across all regions.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0076 — ALT-687  |  Risk Score: 70
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00687
+  Control        : Control-12 (Access_Control)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Enable  |  Status: Under_Review
+  Date           : 2025-07-06 08:01:00  |  Off-hours: False  |  Regression: True
+  Operator       : Daniel Brown <daniel.brown@company.com>
+  Approver       : Eric Fischer
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST IA-2, CIS 5.3
+  Description    : Enable performed on Control-12 (Access_Control) at 08:01 AM on 2025-07-06, reverting a security control from enabled to disabled (regression). Change reason stated: 'Performance Tuning'. Current remediation status: Under...
+  Remediation    : 1. Restore access control baseline. 2. Review access logs for anomalous activity. 3. Enforce re-authentication.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0077 — ALT-873  |  Risk Score: 70
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00873
+  Control        : Control-67 (Cloud_Security)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Update  |  Status: Under_Review
+  Date           : 2025-12-13 09:32:00  |  Off-hours: False  |  Regression: False
+  Operator       : Raja Lim <raja.lim@company.com>
+  Approver       : Arjun Connor
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : CIS 2.1, NIST CM-2, NIST CM-3
+  Description    : Update performed on Control-67 (Cloud_Security) at 09:32 AM on 2025-12-13. Change reason stated: 'Security Update'. Current remediation status: Under Review. Risk score: 70 → classified as CRITICAL DRIFT. Business impact...
+  Remediation    : 1. Restore cloud security baseline. 2. Run cloud posture scan (CSPM tool). 3. Review misconfigurations in all accounts.
+
+════════════════════════════════════════════════════════════════════════
+ 🔴  [P2] ALERT #0078 — ALT-387  |  Risk Score: 70
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00387
+  Control        : Control-1 (Logging)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Rollback  |  Status: Drifted
+  Date           : 2026-02-23 10:54:40  |  Off-hours: False  |  Regression: False
+  Operator       : Shruti Perez <shruti.perez@company.com>
+  Approver       : Jonathan Jackson
+  SLA            : 60 minutes
+  Notify         : CISO, SOC Lead
+  Channel        : PagerDuty P2 + Email
+  ACTION REQUIRED: Begin emergency remediation. Notify CISO within 15 minutes.
+  Compliance     : NIST AU-2, CIS 2.1, NIST SI-12
+  Description    : Rollback performed on Control-1 (Logging) at 10:54 AM on 2026-02-23. Change reason stated: 'Troubleshooting'. Current remediation status: Drifted. Risk score: 70 → classified as CRITICAL DRIFT. Business impact: Loss of a...
+  Remediation    : 1. Restore logging to baseline configuration. 2. Validate log completeness in SIEM. 3. Review recent activity for anomalies.
+
+
+────────────────────────────────────────────────────────────────────────
+  ⚠️   HIGH PRIORITY — 89 P3/P4 Alerts (resolve within 1 hour)
+────────────────────────────────────────────────────────────────────────
+
+════════════════════════════════════════════════════════════════════════
+ 🟠  [P3] ALERT #0001 — ALT-849  |  Risk Score: 125
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00849
+  Control        : Control-13 (Data_Protection)
+  Classification : HIGH_DRIFT
+  Severity       : High  |  Change: Disable  |  Status: Drifted
+  Date           : 2025-12-24 03:53:00  |  Off-hours: True  |  Regression: True
+  Operator       : Sofia Wagner <sofia.wagner@company.com>
+  Approver       : George Huang
+  SLA            : 60 minutes
+  Notify         : SOC Lead, Control Owner
+  Channel        : Slack #soc-alerts + Email
+  ACTION REQUIRED: Assign remediation ticket. Resolve within 1 hour.
+  Compliance     : GDPR 32, PCI-DSS 3.4, ISO 27001 A.12
+  Description    : Disable performed on Control-13 (Data_Protection) at 03:53 AM on 2025-12-24 during off-hours (00:00–07:00, suspicious window), reverting a security control from enabled to disabled (regression). Change reason stated: 'Se...
+  Remediation    : 1. Re-enable data protection controls. 2. Identify affected data assets and assess exposure. 3. Notify DPO; assess GDPR breach notification obligation.
+
+════════════════════════════════════════════════════════════════════════
+ 🟠  [P3] ALERT #0002 — ALT-877  |  Risk Score: 125
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00877
+  Control        : Control-50 (Network_Segmentation)
+  Classification : HIGH_DRIFT
+  Severity       : High  |  Change: Disable  |  Status: Drifted
+  Date           : 2025-12-29 06:24:00  |  Off-hours: True  |  Regression: True
+  Operator       : Jacob Becker <jacob.becker@company.com>
+  Approver       : Shruti Taylor
+  SLA            : 60 minutes
+  Notify         : SOC Lead, Control Owner
+  Channel        : Slack #soc-alerts + Email
+  ACTION REQUIRED: Assign remediation ticket. Resolve within 1 hour.
+  Compliance     : NIST SC-7, CIS 12.1, NIST CM-3
+  Description    : Disable performed on Control-50 (Network_Segmentation) at 06:24 AM on 2025-12-29 during off-hours (00:00–07:00, suspicious window), reverting a security control from enabled to disabled (regression). Change reason stated...
+  Remediation    : 1. Re-enable segmentation controls immediately. 2. Check for lateral movement indicators. 3. Rebuild firewall zone policies if needed.
+
+════════════════════════════════════════════════════════════════════════
+ 🟠  [P3] ALERT #0003 — ALT-583  |  Risk Score: 120
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00583
+  Control        : Control-98 (Logging)
+  Classification : HIGH_DRIFT
+  Severity       : High  |  Change: Remove  |  Status: Drifted
+  Date           : 2025-09-23 02:33:00  |  Off-hours: True  |  Regression: True
+  Operator       : Varun Yang <varun.yang@company.com>
+  Approver       : Edward Guo
+  SLA            : 60 minutes
+  Notify         : SOC Lead, Control Owner
+  Channel        : Slack #soc-alerts + Email
+  ACTION REQUIRED: Assign remediation ticket. Resolve within 1 hour.
+  Compliance     : NIST AU-2, CIS 2.1, NIST SI-12, CIS Benchmark v8
+  Description    : Remove performed on Control-98 (Logging) at 02:33 AM on 2025-09-23 during off-hours (00:00–07:00, suspicious window), reverting a security control from enabled to disabled (regression). Change reason stated: 'Policy Chan...
+  Remediation    : 1. Restore logging agent/service. 2. Perform forensic analysis of the gap period. 3. Notify Compliance team.
+
+════════════════════════════════════════════════════════════════════════
+ 🟠  [P3] ALERT #0004 — ALT-317  |  Risk Score: 115
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00317
+  Control        : Control-74 (Vulnerability)
+  Classification : HIGH_DRIFT
+  Severity       : High  |  Change: Disable  |  Status: Drifted
+  Date           : 2026-03-24 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Edward Thompson <edward.thompson@company.com>
+  Approver       : Amitabh Harris
+  SLA            : 60 minutes
+  Notify         : SOC Lead, Control Owner
+  Channel        : Slack #soc-alerts + Email
+  ACTION REQUIRED: Assign remediation ticket. Resolve within 1 hour.
+  Compliance     : NIST RA-5, CIS 7.1
+  Description    : Disable performed on Control-74 (Vulnerability) at 10:54 AM on 2026-03-24, reverting a security control from enabled to disabled (regression). Change reason stated: 'Security Update'. Current remediation status: Drifted....
+  Remediation    : 1. Re-enable vulnerability scanning immediately. 2. Schedule emergency scan for affected systems. 3. Review unscanned assets for known CVEs.
+
+════════════════════════════════════════════════════════════════════════
+ 🟠  [P3] ALERT #0005 — ALT-557  |  Risk Score: 110
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00557
+  Control        : Control-13 (Access_Control)
+  Classification : HIGH_DRIFT
+  Severity       : High  |  Change: Remove  |  Status: Drifted
+  Date           : 2025-08-26 06:11:00  |  Off-hours: True  |  Regression: True
+  Operator       : Nicholas Perez <nicholas.perez@company.com>
+  Approver       : Vikram Rao
+  SLA            : 60 minutes
+  Notify         : SOC Lead, Control Owner
+  Channel        : Slack #soc-alerts + Email
+  ACTION REQUIRED: Assign remediation ticket. Resolve within 1 hour.
+  Compliance     : NIST IA-2, CIS 5.3
+  Description    : Remove performed on Control-13 (Access_Control) at 06:11 AM on 2025-08-26 during off-hours (00:00–07:00, suspicious window), reverting a security control from enabled to disabled (regression). Change reason stated: 'Poli...
+  Remediation    : 1. Restore access policy from IAM baseline. 2. Review who accessed resources during the gap. 3. Apply least-privilege remediation.
+
+════════════════════════════════════════════════════════════════════════
+ 🟠  [P3] ALERT #0006 — ALT-930  |  Risk Score: 105
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00930
+  Control        : Control-67 (Network_Segmentation)
+  Classification : HIGH_DRIFT
+  Severity       : High  |  Change: Update  |  Status: Drifted
+  Date           : 2025-07-14 06:35:00  |  Off-hours: True  |  Regression: True
+  Operator       : Rohan Gonzalez <rohan.gonzalez@company.com>
+  Approver       : Sanjana Murphy
+  SLA            : 60 minutes
+  Notify         : SOC Lead, Control Owner
+  Channel        : Slack #soc-alerts + Email
+  ACTION REQUIRED: Assign remediation ticket. Resolve within 1 hour.
+  Compliance     : NIST SC-7, CIS 12.1, CIS Benchmark v8
+  Description    : Update performed on Control-67 (Network_Segmentation) at 06:35 AM on 2025-07-14 during off-hours (00:00–07:00, suspicious window), reverting a security control from enabled to disabled (regression). Change reason stated:...
+  Remediation    : 1. Restore network segmentation baseline. 2. Validate micro-segmentation policies. 3. Review inter-VLAN routing tables.
+
+════════════════════════════════════════════════════════════════════════
+ 🟠  [P3] ALERT #0007 — ALT-731  |  Risk Score: 105
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00731
+  Control        : Control-67 (Cloud_Security)
+  Classification : HIGH_DRIFT
+  Severity       : High  |  Change: Update  |  Status: Drifted
+  Date           : 2025-08-08 00:24:00  |  Off-hours: True  |  Regression: True
+  Operator       : Leila Lopez <leila.lopez@company.com>
+  Approver       : Diya Bhat
+  SLA            : 60 minutes
+  Notify         : SOC Lead, Control Owner
+  Channel        : Slack #soc-alerts + Email
+  ACTION REQUIRED: Assign remediation ticket. Resolve within 1 hour.
+  Compliance     : CIS 2.1, NIST CM-2, GDPR Article 32
+  Description    : Update performed on Control-67 (Cloud_Security) at 12:24 AM on 2025-08-08 during off-hours (00:00–07:00, suspicious window), reverting a security control from enabled to disabled (regression). Change reason stated: 'Poli...
+  Remediation    : 1. Restore cloud security baseline. 2. Run cloud posture scan (CSPM tool). 3. Review misconfigurations in all accounts.
+
+════════════════════════════════════════════════════════════════════════
+ 🟠  [P3] ALERT #0008 — ALT-591  |  Risk Score: 105
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00591
+  Control        : Control-10 (Firewall)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Remove  |  Status: Mitigated
+  Date           : 2026-01-15 05:47:00  |  Off-hours: True  |  Regression: True
+  Operator       : Paul Thomas <paul.thomas@company.com>
+  Approver       : Michael Murphy
+  SLA            : 60 minutes
+  Notify         : SOC Lead, Control Owner
+  Channel        : Slack #soc-alerts + Email
+  ACTION REQUIRED: Assign remediation ticket. Resolve within 1 hour.
+  Compliance     : CIS 3.1, NIST AC-4, GDPR Article 32
+  Description    : Remove performed on Control-10 (Firewall) at 05:47 AM on 2026-01-15 during off-hours (00:00–07:00, suspicious window), reverting a security control from enabled to disabled (regression). Change reason stated: 'Emergency ...
+  Remediation    : 1. Restore firewall to baseline configuration. 2. Review traffic logs for anomalies. 3. Validate threat-prevention policies.
+
+════════════════════════════════════════════════════════════════════════
+ 🟠  [P3] ALERT #0009 — ALT-76  |  Risk Score: 105
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00076
+  Control        : Control-62 (Vulnerability)
+  Classification : HIGH_DRIFT
+  Severity       : High  |  Change: Disable  |  Status: Drifted
+  Date           : 2026-03-26 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Larry Martinez <larry.martinez@company.com>
+  Approver       : George Taylor
+  SLA            : 60 minutes
+  Notify         : SOC Lead, Control Owner
+  Channel        : Slack #soc-alerts + Email
+  ACTION REQUIRED: Assign remediation ticket. Resolve within 1 hour.
+  Compliance     : NIST RA-5, CIS 7.1
+  Description    : Disable performed on Control-62 (Vulnerability) at 10:54 AM on 2026-03-26, reverting a security control from enabled to disabled (regression). Change reason stated: 'Troubleshooting'. Current remediation status: Drifted....
+  Remediation    : 1. Re-enable vulnerability scanning immediately. 2. Schedule emergency scan for affected systems. 3. Review unscanned assets for known CVEs.
+
+════════════════════════════════════════════════════════════════════════
+ 🟠  [P3] ALERT #0010 — ALT-81  |  Risk Score: 105
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00081
+  Control        : Control-23 (Vulnerability)
+  Classification : HIGH_DRIFT
+  Severity       : High  |  Change: Disable  |  Status: Drifted
+  Date           : 2026-04-05 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Zainab Bhat <zainab.bhat@company.com>
+  Approver       : Deepika Martinez
+  SLA            : 60 minutes
+  Notify         : SOC Lead, Control Owner
+  Channel        : Slack #soc-alerts + Email
+  ACTION REQUIRED: Assign remediation ticket. Resolve within 1 hour.
+  Compliance     : NIST RA-5, CIS 7.1
+  Description    : Disable performed on Control-23 (Vulnerability) at 10:54 AM on 2026-04-05, reverting a security control from enabled to disabled (regression). Change reason stated: 'Emergency Fix'. Current remediation status: Drifted. R...
+  Remediation    : 1. Re-enable vulnerability scanning immediately. 2. Schedule emergency scan for affected systems. 3. Review unscanned assets for known CVEs.
+
+════════════════════════════════════════════════════════════════════════
+ 🟠  [P3] ALERT #0011 — ALT-595  |  Risk Score: 100
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00595
+  Control        : Control-25 (Data_Protection)
+  Classification : HIGH_DRIFT
+  Severity       : High  |  Change: Modify  |  Status: Drifted
+  Date           : 2025-08-25 18:36:00  |  Off-hours: False  |  Regression: True
+  Operator       : Fatima White <fatima.white@company.com>
+  Approver       : David Harris
+  SLA            : 60 minutes
+  Notify         : SOC Lead, Control Owner
+  Channel        : Slack #soc-alerts + Email
+  ACTION REQUIRED: Assign remediation ticket. Resolve within 1 hour.
+  Compliance     : GDPR 32, PCI-DSS 3.4, PCI-DSS 12.10
+  Description    : Modify performed on Control-25 (Data_Protection) at 06:36 PM on 2025-08-25, reverting a security control from enabled to disabled (regression). Change reason stated: 'Performance Tuning'. Current remediation status: Drif...
+  Remediation    : 1. Restore data protection baseline. 2. Audit data handling during exposure window. 3. Review retention and access policies.
+
+════════════════════════════════════════════════════════════════════════
+ 🟠  [P3] ALERT #0012 — ALT-986  |  Risk Score: 100
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00986
+  Control        : Control-50 (Data_Protection)
+  Classification : HIGH_DRIFT
+  Severity       : High  |  Change: Modify  |  Status: Drifted
+  Date           : 2025-10-24 08:26:00  |  Off-hours: False  |  Regression: True
+  Operator       : Nicholas Miller <nicholas.miller@company.com>
+  Approver       : James Han
+  SLA            : 60 minutes
+  Notify         : SOC Lead, Control Owner
+  Channel        : Slack #soc-alerts + Email
+  ACTION REQUIRED: Assign remediation ticket. Resolve within 1 hour.
+  Compliance     : GDPR 32, PCI-DSS 3.4, CIS Benchmark v8
+  Description    : Modify performed on Control-50 (Data_Protection) at 08:26 AM on 2025-10-24, reverting a security control from enabled to disabled (regression). Change reason stated: 'Performance Tuning'. Current remediation status: Drif...
+  Remediation    : 1. Restore data protection baseline. 2. Audit data handling during exposure window. 3. Review retention and access policies.
+
+════════════════════════════════════════════════════════════════════════
+ 🟠  [P3] ALERT #0013 — ALT-829  |  Risk Score: 100
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00829
+  Control        : Control-22 (Firewall)
+  Classification : HIGH_DRIFT
+  Severity       : High  |  Change: Modify  |  Status: Drifted
+  Date           : 2025-12-18 13:26:00  |  Off-hours: False  |  Regression: True
+  Operator       : Christopher Davis <christopher.davis@company.com>
+  Approver       : Aisha Li
+  SLA            : 60 minutes
+  Notify         : SOC Lead, Control Owner
+  Channel        : Slack #soc-alerts + Email
+  ACTION REQUIRED: Assign remediation ticket. Resolve within 1 hour.
+  Compliance     : CIS 3.1, NIST AC-4, NIST CM-3
+  Description    : Modify performed on Control-22 (Firewall) at 01:26 PM on 2025-12-18, reverting a security control from enabled to disabled (regression). Change reason stated: 'Troubleshooting'. Current remediation status: Drifted. Risk ...
+  Remediation    : 1. Revert to baseline allowed-port list. 2. Block any newly opened ports immediately. 3. Run traffic analysis to detect exploitation. 4. Update firewall change management log.
+
+════════════════════════════════════════════════════════════════════════
+ 🟠  [P3] ALERT #0014 — ALT-461  |  Risk Score: 100
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00461
+  Control        : Control-36 (Firewall)
+  Classification : HIGH_DRIFT
+  Severity       : High  |  Change: Modify  |  Status: Drifted
+  Date           : 2026-02-09 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Diya Anderson <diya.anderson@company.com>
+  Approver       : Maria Pillai
+  SLA            : 60 minutes
+  Notify         : SOC Lead, Control Owner
+  Channel        : Slack #soc-alerts + Email
+  ACTION REQUIRED: Assign remediation ticket. Resolve within 1 hour.
+  Compliance     : CIS 3.1, NIST AC-4
+  Description    : Modify performed on Control-36 (Firewall) at 10:54 AM on 2026-02-09, reverting a security control from enabled to disabled (regression). Change reason stated: 'Policy Change'. Current remediation status: Drifted. Risk sc...
+  Remediation    : 1. Revert to baseline allowed-port list. 2. Block any newly opened ports immediately. 3. Run traffic analysis to detect exploitation. 4. Update firewall change management log.
+
+════════════════════════════════════════════════════════════════════════
+ 🟠  [P3] ALERT #0015 — ALT-150  |  Risk Score: 100
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00150
+  Control        : Control-7 (Access_Control)
+  Classification : HIGH_DRIFT
+  Severity       : High  |  Change: Modify  |  Status: Drifted
+  Date           : 2026-03-06 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Daniel Gonzalez <daniel.gonzalez@company.com>
+  Approver       : Daniel Davis
+  SLA            : 60 minutes
+  Notify         : SOC Lead, Control Owner
+  Channel        : Slack #soc-alerts + Email
+  ACTION REQUIRED: Assign remediation ticket. Resolve within 1 hour.
+  Compliance     : NIST IA-2, CIS 5.3
+  Description    : Modify performed on Control-7 (Access_Control) at 10:54 AM on 2026-03-06, reverting a security control from enabled to disabled (regression). Change reason stated: 'Troubleshooting'. Current remediation status: Drifted. ...
+  Remediation    : 1. Restore access control baseline. 2. Review access logs for anomalous activity. 3. Enforce re-authentication.
+
+════════════════════════════════════════════════════════════════════════
+ 🟠  [P3] ALERT #0016 — ALT-420  |  Risk Score: 100
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00420
+  Control        : Control-79 (Vulnerability)
+  Classification : HIGH_DRIFT
+  Severity       : High  |  Change: Remove  |  Status: Drifted
+  Date           : 2026-03-11 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Andrew Kumar <andrew.kumar@company.com>
+  Approver       : Priya Lewis
+  SLA            : 60 minutes
+  Notify         : SOC Lead, Control Owner
+  Channel        : Slack #soc-alerts + Email
+  ACTION REQUIRED: Assign remediation ticket. Resolve within 1 hour.
+  Compliance     : NIST RA-5, CIS 7.1
+  Description    : Remove performed on Control-79 (Vulnerability) at 10:54 AM on 2026-03-11, reverting a security control from enabled to disabled (regression). Change reason stated: 'Performance Tuning'. Current remediation status: Drifte...
+  Remediation    : 1. Restore vulnerability management baseline. 2. Run immediate scan on affected scope. 3. Prioritise critical CVEs for patching.
+
+════════════════════════════════════════════════════════════════════════
+ 🟠  [P3] ALERT #0017 — ALT-9  |  Risk Score: 100
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00009
+  Control        : Control-44 (Logging)
+  Classification : HIGH_DRIFT
+  Severity       : High  |  Change: Modify  |  Status: Drifted
+  Date           : 2026-03-24 10:54:40  |  Off-hours: False  |  Regression: True
+  Operator       : Harsh Nair <harsh.nair@company.com>
+  Approver       : George Garcia
+  SLA            : 60 minutes
+  Notify         : SOC Lead, Control Owner
+  Channel        : Slack #soc-alerts + Email
+  ACTION REQUIRED: Assign remediation ticket. Resolve within 1 hour.
+  Compliance     : NIST AU-2, CIS 2.1, NIST SI-12
+  Description    : Modify performed on Control-44 (Logging) at 10:54 AM on 2026-03-24, reverting a security control from enabled to disabled (regression). Change reason stated: 'Policy Change'. Current remediation status: Drifted. Risk sco...
+  Remediation    : 1. Revert logging configuration to baseline. 2. Verify log ingestion in SIEM. 3. Review recent log gaps for anomalies.
+
+════════════════════════════════════════════════════════════════════════
+ 🟠  [P3] ALERT #0018 — ALT-560  |  Risk Score: 95
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00560
+  Control        : Control-48 (Data_Protection)
+  Classification : CRITICAL_DRIFT
+  Severity       : Critical  |  Change: Remove  |  Status: Mitigated
+  Date           : 2025-04-24 19:48:00  |  Off-hours: False  |  Regression: True
+  Operator       : Larry Sullivan <larry.sullivan@company.com>
+  Approver       : Larry Lopez
+  SLA            : 60 minutes
+  Notify         : SOC Lead, Control Owner
+  Channel        : Slack #soc-alerts + Email
+  ACTION REQUIRED: Assign remediation ticket. Resolve within 1 hour.
+  Compliance     : GDPR 32, PCI-DSS 3.4, PCI-DSS 12.10
+  Description    : Remove performed on Control-48 (Data_Protection) at 07:48 PM on 2025-04-24, reverting a security control from enabled to disabled (regression). Change reason stated: 'Emergency Fix'. Current remediation status: Mitigated...
+  Remediation    : 1. Restore data protection policy. 2. Perform data inventory audit. 3. Escalate to Legal/Compliance.
+
+════════════════════════════════════════════════════════════════════════
+ 🟠  [P3] ALERT #0019 — ALT-615  |  Risk Score: 95
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00615
+  Control        : Control-70 (Data_Protection)
+  Classification : HIGH_DRIFT
+  Severity       : High  |  Change: Update  |  Status: Drifted
+  Date           : 2025-05-18 20:43:00  |  Off-hours: False  |  Regression: True
+  Operator       : Joshua Taylor <joshua.taylor@company.com>
+  Approver       : Edward Williams
+  SLA            : 60 minutes
+  Notify         : SOC Lead, Control Owner
+  Channel        : Slack #soc-alerts + Email
+  ACTION REQUIRED: Assign remediation ticket. Resolve within 1 hour.
+  Compliance     : GDPR 32, PCI-DSS 3.4, ISO 27001 A.12
+  Description    : Update performed on Control-70 (Data_Protection) at 08:43 PM on 2025-05-18, reverting a security control from enabled to disabled (regression). Change reason stated: 'Emergency Fix'. Current remediation status: Drifted. ...
+  Remediation    : 1. Restore data protection baseline. 2. Audit data handling during exposure window. 3. Review retention and access policies.
+
+════════════════════════════════════════════════════════════════════════
+ 🟠  [P3] ALERT #0020 — ALT-713  |  Risk Score: 95
+────────────────────────────────────────────────────────────────────────
+  Drift Event    : DRF00713
+  Control        : Control-26 (Endpoint)
+  Classification : HIGH_DRIFT
+  Severity       : High  |  Change: Update  |  Status: Drifted
+  Date           : 2025-06-08 12:23:00  |  Off-hours: False  |  Regression: True
+  Operator       : Jason Robinson <jason.robinson@company.com>
+  Approver       : Raja He
+  SLA            : 60 minutes
+  Notify         : SOC Lead, Control Owner
+  Channel        : Slack #soc-alerts + Email
+  ACTION REQUIRED: Assign remediation ticket. Resolve within 1 hour.
+  Compliance     : NIST SI-3, CIS 8.1, GDPR Article 32
+  Description    : Update performed on Control-26 (Endpoint) at 12:23 PM on 2025-06-08, reverting a security control from enabled to disabled (regression). Change reason stated: 'Security Update'. Current remediation status: Drifted. Risk ...
+  Remediation    : 1. Restore endpoint security baseline. 2. Force agent update on all managed endpoints. 3. Validate EDR telemetry.
+
+  ... and 69 more P3/P4 alerts. See alerts.json for full list.
+
+────────────────────────────────────────────────────────────────────────
+  📋  STANDARD QUEUE — 546 P5/P6 Alerts (schedule review)
+────────────────────────────────────────────────────────────────────────
+  546 P5-P6 alerts not shown. See alerts.json.

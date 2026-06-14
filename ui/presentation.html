@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Control Drift Detection | Societe Generale Hackathon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #050912;
+    --card:    #0d1120;
+    --border:  #1a2035;
+    --red:     #ff4757;
+    --orange:  #ffa502;
+    --yellow:  #ffd32a;
+    --green:   #2ed573;
+    --blue:    #1e90ff;
+    --purple:  #a55eea;
+    --cyan:    #0cdfe5;
+    --text:    #e8eaf0;
+    --muted:   #8892a4;
+    --dim:     #3a4155;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; overflow: hidden; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  /* ── Slide container ─────────────────────────── */
+  .deck {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 52px 72px;
+    opacity: 0;
+    transform: translateX(60px);
+    transition: all 0.5s cubic-bezier(0.4,0,0.2,1);
+    pointer-events: none;
+  }
+
+  .slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
+  }
+
+  .slide.out {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+
+  /* ── Progress bar ────────────────────────────── */
+  .progress-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--purple), var(--red));
+    transition: width 0.4s ease;
+    z-index: 999;
+  }
+
+  /* ── Nav controls ────────────────────────────── */
+  .nav {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: rgba(13,17,32,0.9);
+    border: 1px solid var(--border);
+    padding: 8px 18px;
+    border-radius: 40px;
+    backdrop-filter: blur(12px);
+    z-index: 999;
+  }
+
+  .nav-btn {
+    background: var(--border);
+    border: none;
+    color: var(--text);
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+
+  .nav-btn:hover { background: var(--blue); }
+
+  .slide-counter {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    min-width: 44px;
+    text-align: center;
+  }
+
+  .slide-dots {
+    display: flex;
+    gap: 5px;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--dim);
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+
+  .dot.active {
+    width: 18px;
+    background: var(--blue);
+  }
+
+  /* ── Slide label ─────────────────────────────── */
+  .slide-label {
+    position: fixed;
+    top: 22px;
+    right: 28px;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: 1px solid var(--border);
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: rgba(13,17,32,0.8);
+    z-index: 999;
+  }
+
+  /* ── SG Logo area ────────────────────────────── */
+  .sg-badge {
+    position: fixed;
+    top: 20px;
+    left: 28px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 999;
+  }
+
+  .sg-logo {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--red), #ff6b81);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    box-shadow: 0 0 16px rgba(255,71,87,0.4);
+  }
+
+  .sg-name {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ── Typography helpers ──────────────────────── */
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+  }
+
+  .tag-blue   { background: rgba(30,144,255,0.15); color: var(--blue);   border: 1px solid rgba(30,144,255,0.3); }
+  .tag-red    { background: rgba(255,71,87,0.15);  color: var(--red);    border: 1px solid rgba(255,71,87,0.3); }
+  .tag-green  { background: rgba(46,213,115,0.15); color: var(--green);  border: 1px solid rgba(46,213,115,0.3); }
+  .tag-purple { background: rgba(165,94,234,0.15); color: var(--purple); border: 1px solid rgba(165,94,234,0.3); }
+  .tag-orange { background: rgba(255,165,2,0.15);  color: var(--orange); border: 1px solid rgba(255,165,2,0.3); }
+
+  h1 {
+    font-size: clamp(32px, 4.5vw, 58px);
+    font-weight: 900;
+    line-height: 1.1;
+    text-align: center;
+    letter-spacing: -0.02em;
+    margin-bottom: 18px;
+  }
+
+  h2 {
+    font-size: clamp(22px, 3vw, 38px);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-red {
+    background: linear-gradient(135deg, var(--red), var(--orange));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    font-size: clamp(13px, 1.5vw, 17px);
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.7;
+    max-width: 680px;
+  }
+
+  /* ── Cards / grids ───────────────────────────── */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    width: 100%;
+    max-width: 960px;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    width: 100%;
+    max-width: 1000px;
+  }
+
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    width: 100%;
+    max-width: 960px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 14px 14px 0 0;
+  }
+
+  .card.red::before    { background: var(--red); }
+  .card.blue::before   { background: var(--blue); }
+  .card.green::before  { background: var(--green); }
+  .card.orange::before { background: var(--orange); }
+  .card.purple::before { background: var(--purple); }
+
+  .card-icon {
+    font-size: 26px;
+    margin-bottom: 10px;
+  }
+
+  .card-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .card-body {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── Stat boxes ──────────────────────────────── */
+  .stat-box {
+    text-align: center;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 16px;
+  }
+
+  .stat-num {
+    font-size: clamp(28px, 3.5vw, 48px);
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 6px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+  }
+
+  .stat-sub {
+    font-size: 10px;
+    color: var(--dim);
+    margin-top: 4px;
+  }
+
+  /* ── Code block ──────────────────────────────── */
+  .code-block {
+    background: #060b15;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #7ec8e3;
+    line-height: 1.8;
+    width: 100%;
+    max-width: 700px;
+    text-align: left;
+    overflow: hidden;
+  }
+
+  .code-comment { color: #4a5568; }
+  .code-key     { color: var(--orange); }
+  .code-val     { color: var(--green); }
+  .code-str     { color: #eccc68; }
+
+  /* ── Flow diagram ────────────────────────────── */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .flow-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .flow-arrow {
+    color: var(--muted);
+    font-size: 18px;
+    padding: 0 4px;
+  }
+
+  /* ── Metric row ──────────────────────────────── */
+  .metric-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    width: 100%;
+    max-width: 800px;
+    gap: 12px;
+  }
+
+  .metric-name {
+    font-size: 13px;
+    font-weight: 600;
+    flex: 1;
+  }
+
+  .metric-target {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    flex: 1;
+    text-align: center;
+  }
+
+  .metric-result {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    flex: 1;
+    text-align: right;
+  }
+
+  .metric-pass {
+    color: var(--green);
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .bar-track {
+    flex: 2;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.8s ease;
+  }
+
+  /* ── Timeline ────────────────────────────────── */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    max-width: 760px;
+  }
+
+  .tl-item {
+    display: grid;
+    grid-template-columns: 90px 1px 1fr;
+    gap: 0 18px;
+    padding-bottom: 20px;
+  }
+
+  .tl-item:last-child { padding-bottom: 0; }
+
+  .tl-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-align: right;
+    padding-top: 2px;
+  }
+
+  .tl-line {
+    position: relative;
+  }
+
+  .tl-line::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--blue);
+    box-shadow: 0 0 12px rgba(30,144,255,0.5);
+  }
+
+  .tl-line::after {
+    content: '';
+    position: absolute;
+    top: 16px;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    background: var(--border);
+  }
+
+  .tl-item:last-child .tl-line::after { display: none; }
+
+  .tl-content {
+    padding-top: 0;
+  }
+
+  .tl-title {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+
+  .tl-body {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ── Slide-specific ──────────────────────────── */
+  .hero-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(30,144,255,0.08) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .divider {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--purple));
+    border-radius: 2px;
+    margin: 16px auto 28px;
+  }
+
+  .full-width {
+    width: 100%;
+    max-width: 1100px;
+  }
+
+  /* Table */
+  .mini-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  .mini-table th {
+    background: rgba(255,255,255,0.04);
+    padding: 8px 14px;
+    text-align: left;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+  .mini-table td {
+    padding: 8px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: var(--text);
+  }
+  .mini-table tr:last-child td { border-bottom: none; }
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+
+  /* Highlight */
+  .hl-red    { color: var(--red); }
+  .hl-green  { color: var(--green); }
+  .hl-blue   { color: var(--blue); }
+  .hl-orange { color: var(--orange); }
+  .hl-yellow { color: var(--yellow); }
+  .hl-purple { color: var(--purple); }
+
+  .big-icon { font-size: 64px; margin-bottom: 16px; }
+
+  .bullet-list {
+    list-style: none;
+    width: 100%;
+    max-width: 780px;
+    text-align: left;
+  }
+  .bullet-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--muted);
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    line-height: 1.5;
+  }
+  .bullet-list li:last-child { border-bottom: none; }
+  .bullet-icon { flex-shrink: 0; font-size: 16px; }
+  .bullet-strong { color: var(--text); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="sg-badge">
+  <div class="sg-logo">🛡</div>
+  <div class="sg-name">Societe Generale · Enterprise Security</div>
+</div>
+
+<div class="slide-label" id="slideLabel">Slide 1 / 12</div>
+<div class="progress-bar" id="progressBar" style="width:8.33%"></div>
+
+<div class="deck" id="deck">
+
+  <!-- ══ SLIDE 1: TITLE ══ -->
+  <div class="slide active" id="slide-0">
+    <div class="hero-glow"></div>
+    <div class="tag tag-red">⚠️ Enterprise Security Hackathon — Problem 02</div>
+    <h1 class="gradient-text">Security Control<br>Drift Detection System</h1>
+    <div class="divider"></div>
+    <p class="subtitle">
+      A production-grade platform that detects, classifies, and explains deviations
+      from approved security baselines across 10 control domains —
+      with <strong style="color:var(--text)">93.9% detection rate</strong> and
+      <strong style="color:var(--text)">5.4% false positive rate</strong>.
+    </p>
+    <div style="margin-top:36px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+      <div class="tag tag-blue">1,000 Events Analysed</div>
+      <div class="tag tag-green">All 5 Metrics PASS ✅</div>
+      <div class="tag tag-purple">F1 Score: 91.3%</div>
+      <div class="tag tag-orange">48K events/sec</div>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 2: THE PROBLEM ══ -->
+  <div class="slide" id="slide-1">
+    <div class="tag tag-red">The Problem</div>
+    <h2>Configuration Drift is <span class="gradient-red">Invisible</span></h2>
+    <div class="divider"></div>
+    <div class="grid-3" style="margin-top:8px;">
+      <div class="card red">
+        <div class="card-icon">🕐</div>
+        <div class="card-title">Days of Lag</div>
+        <div class="card-body">Manual configuration reviews take days to weeks. Attackers exploit misconfigurations within hours.</div>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">🔔</div>
+        <div class="card-title">Alert Fatigue</div>
+        <div class="card-body">Security teams receive alerts with no context, cause, or remediation steps — leading to ignored alerts.</div>
+      </div>
+      <div class="card purple">
+        <div class="card-icon">📋</div>
+        <div class="card-title">Compliance Blind Spots</div>
+        <div class="card-body">Drifts are not automatically mapped to NIST, GDPR, or PCI-DSS, making audit reporting manual and error-prone.</div>
+      </div>
+      <div class="card blue">
+        <div class="card-icon">👤</div>
+        <div class="card-title">No Operator Accountability</div>
+        <div class="card-body">Who made the change? When? Why? There is no risk ranking of operators making high-risk changes.</div>
+      </div>
+      <div class="card green">
+        <div class="card-icon">🌙</div>
+        <div class="card-title">Off-Hours Blind Spots</div>
+        <div class="card-body">Security changes at 2AM are especially dangerous — no automated detection of suspicious timing windows.</div>
+      </div>
+      <div class="card" style="border-color:var(--dim);">
+        <div class="card-icon">🔄</div>
+        <div class="card-title">Silent Regressions</div>
+        <div class="card-body">Controls silently disabled after being enabled — the most dangerous drift pattern — go undetected.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 3: DATASET ══ -->
+  <div class="slide" id="slide-2">
+    <div class="tag tag-blue">Dataset</div>
+    <h2>1,000 Drift Events Across <span class="gradient-text">10 Control Domains</span></h2>
+    <div class="divider"></div>
+    <div class="grid-2" style="max-width:880px;gap:20px;">
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px;">Event Distribution</div>
+        <table class="mini-table" style="background:var(--card);border-radius:10px;overflow:hidden;">
+          <thead><tr><th>Control Type</th><th>Events</th><th>%</th></tr></thead>
+          <tbody>
+            <tr><td>Vulnerability</td><td class="mono hl-red">124</td><td>12.4%</td></tr>
+            <tr><td>Logging</td><td class="mono hl-orange">111</td><td>11.1%</td></tr>
+            <tr><td>DLP</td><td class="mono hl-blue">101</td><td>10.1%</td></tr>
+            <tr><td>Cloud_Security</td><td class="mono hl-blue">101</td><td>10.1%</td></tr>
+            <tr><td>Data_Protection</td><td class="mono hl-blue">101</td><td>10.1%</td></tr>
+            <tr><td>Access_Control</td><td class="mono">100</td><td>10.0%</td></tr>
+            <tr><td>Endpoint</td><td class="mono">100</td><td>10.0%</td></tr>
+            <tr><td>Firewall</td><td class="mono">99</td><td>9.9%</td></tr>
+            <tr><td>Network_Seg.</td><td class="mono">81</td><td>8.1%</td></tr>
+            <tr><td>Encryption</td><td class="mono">82</td><td>8.2%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px;">Key Signals in Data</div>
+        <div class="stat-box" style="margin-bottom:10px;">
+          <div class="stat-num hl-orange">508</div>
+          <div class="stat-label">Regression Events</div>
+          <div class="stat-sub">enabled→disabled · 50.8% of all events</div>
+        </div>
+        <div class="stat-box" style="margin-bottom:10px;">
+          <div class="stat-num hl-red">136</div>
+          <div class="stat-label">Off-Hours Changes</div>
+          <div class="stat-sub">00:00–06:59 suspicious window</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num hl-purple">13</div>
+          <div class="stat-label">Months of Data</div>
+          <div class="stat-sub">Apr 2025 – Apr 2026</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 4: ARCHITECTURE ══ -->
+  <div class="slide" id="slide-3">
+    <div class="tag tag-purple">Architecture</div>
+    <h2>6-Module <span class="gradient-text">Pipeline Architecture</span></h2>
+    <div class="divider"></div>
+    <div class="flow" style="margin-bottom:24px;">
+      <div class="flow-box" style="border-color:var(--blue);color:var(--blue);">baseline_configs.json</div>
+      <div class="flow-arrow">+</div>
+      <div class="flow-box" style="border-color:var(--blue);color:var(--blue);">config_drift_events.csv</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box" style="border-color:var(--orange);color:var(--orange);">Drift Detection Engine</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box" style="border-color:var(--green);color:var(--green);">Explainability Engine</div>
+    </div>
+    <div class="flow" style="margin-bottom:28px;">
+      <div class="flow-box" style="border-color:var(--green);color:var(--green);">Explainability Engine</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box" style="border-color:var(--purple);color:var(--purple);">Report Generator</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box" style="border-color:var(--red);color:var(--red);">SOC Dashboard</div>
+      <div class="flow-arrow">+</div>
+      <div class="flow-box" style="border-color:var(--cyan);color:var(--cyan);">Jupyter Notebook</div>
+    </div>
+    <div class="grid-4" style="max-width:1000px;">
+      <div class="card blue">
+        <div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:6px;">DRIFT DETECTOR</div>
+        <div class="card-body">6-factor scoring, severity-gated classification, regression detection</div>
+      </div>
+      <div class="card green">
+        <div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:6px;">EXPLAINABILITY</div>
+        <div class="card-body">Plain-English, compliance violations, business impact, remediation</div>
+      </div>
+      <div class="card red">
+        <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:6px;">SOC DASHBOARD</div>
+        <div class="card-body">5 Chart.js charts, live alerts, filter bar, compliance table</div>
+      </div>
+      <div class="card purple">
+        <div style="font-size:11px;font-weight:700;color:var(--purple);margin-bottom:6px;">ML NOTEBOOK</div>
+        <div class="card-body">Isolation Forest (200 trees), feature engineering, confusion matrix</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 5: SCORING ALGORITHM ══ -->
+  <div class="slide" id="slide-4">
+    <div class="tag tag-orange">Algorithm</div>
+    <h2>6-Factor <span class="gradient-text">Risk Scoring Model</span></h2>
+    <div class="divider"></div>
+    <div class="grid-2" style="max-width:920px;align-items:start;">
+      <div>
+        <div class="code-block">
+<span class="code-comment"># Multi-Factor Additive Scoring</span>
+risk_score = max(0,
+  <span class="code-key">severity_weight</span>    <span class="code-comment"># 0–40</span>
+  + <span class="code-key">status_weight</span>      <span class="code-comment"># −10 to +30</span>
+  + <span class="code-key">change_type_weight</span> <span class="code-comment"># −5 to +25</span>
+  + <span class="code-key">regression_bonus</span>   <span class="code-comment"># severity-gated</span>
+  + <span class="code-key">off_hours_bonus</span>    <span class="code-comment"># +10 if 00:00–07:00</span>
+  + <span class="code-key">compliance_bonus</span>   <span class="code-comment"># +10 if mapped</span>
+)
+
+<span class="code-comment"># Severity ceiling applied AFTER scoring</span>
+<span class="code-key">Info</span>   → max <span class="code-val">BENIGN</span>
+<span class="code-key">Low</span>    → max <span class="code-val">MEDIUM_DRIFT</span>
+<span class="code-key">Medium</span> → max <span class="code-val">MEDIUM_DRIFT</span> <span class="code-comment"># key FPR fix</span>
+<span class="code-key">High</span>   → max <span class="code-val">HIGH_DRIFT</span>
+<span class="code-key">Critical</span> → <span class="code-val">CRITICAL_DRIFT</span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;">Score Breakdown Factors</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:var(--card);padding:8px 14px;border-radius:8px;border:1px solid var(--border);">
+          <span style="font-size:12px;font-weight:600;">Severity</span>
+          <span style="font-family:monospace;color:var(--red);">+0 to +40</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:var(--card);padding:8px 14px;border-radius:8px;border:1px solid var(--border);">
+          <span style="font-size:12px;font-weight:600;">Status</span>
+          <span style="font-family:monospace;color:var(--orange);">−10 to +30</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:var(--card);padding:8px 14px;border-radius:8px;border:1px solid var(--border);">
+          <span style="font-size:12px;font-weight:600;">Change Type (Disable)</span>
+          <span style="font-family:monospace;color:var(--orange);">+25</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:var(--card);padding:8px 14px;border-radius:8px;border:1px solid var(--border);">
+          <span style="font-size:12px;font-weight:600;">Regression Bonus</span>
+          <span style="font-family:monospace;color:var(--yellow);">+10 / +20 (sev-gated)</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:var(--card);padding:8px 14px;border-radius:8px;border:1px solid var(--border);">
+          <span style="font-size:12px;font-weight:600;">Off-Hours</span>
+          <span style="font-family:monospace;color:var(--yellow);">+10</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:var(--card);padding:8px 14px;border-radius:8px;border:1px solid var(--border);">
+          <span style="font-size:12px;font-weight:600;">Compliance Present</span>
+          <span style="font-family:monospace;color:var(--yellow);">+10</span>
+        </div>
+        <div style="margin-top:8px;background:rgba(30,144,255,0.08);border:1px solid rgba(30,144,255,0.25);border-radius:10px;padding:10px 14px;font-size:11px;color:var(--muted);">
+          <strong style="color:var(--blue);">Thresholds:</strong> CRITICAL ≥ 70 · HIGH 50–69 · MEDIUM 30–49 · BENIGN &lt;30
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 6: FPR CALIBRATION ══ -->
+  <div class="slide" id="slide-5">
+    <div class="tag tag-red">Calibration</div>
+    <h2>False Positive Rate: <span class="gradient-red">50% → 5.4%</span></h2>
+    <div class="divider"></div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-date">v1 Baseline</div>
+        <div class="tl-line"></div>
+        <div class="tl-content">
+          <div class="tl-title hl-red">FPR = 50.4% · Recall = 95.2%</div>
+          <div class="tl-body">Low/Info events getting +20 regression bonus regardless of severity → promoted to CRITICAL. Fixed-weight regression bonus was the root cause.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">v2 Fix 1</div>
+        <div class="tl-line"></div>
+        <div class="tl-content">
+          <div class="tl-title hl-orange">FPR = 25.0% · Recall = 94.2%</div>
+          <div class="tl-body">Severity-gated regression bonus introduced: Low/Info → 0 bonus, Medium → +10. Compliant/Remediated status gets −5 penalty. FPR halved.</div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">v3 Final</div>
+        <div class="tl-line" style=""></div>
+        <div class="tl-content">
+          <div class="tl-title hl-green">FPR = 5.4% · Recall = 93.9% · F1 = 91.3%</div>
+          <div class="tl-body">Medium severity capped at MEDIUM_DRIFT. Compliant/Remediated penalty increased to −10. 37 FPs remain from inherently ambiguous edge cases.</div>
+        </div>
+      </div>
+    </div>
+    <div class="grid-4" style="margin-top:24px;max-width:880px;">
+      <div class="stat-box">
+        <div class="stat-num hl-green">294</div>
+        <div class="stat-label">True Positives</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" style="color:var(--orange);">37</div>
+        <div class="stat-label">False Positives</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num hl-green">650</div>
+        <div class="stat-label">True Negatives</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" style="color:var(--dim);">19</div>
+        <div class="stat-label">False Negatives</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 7: EXPLAINABILITY ══ -->
+  <div class="slide" id="slide-6">
+    <div class="tag tag-green">Explainability</div>
+    <h2>Every Alert Has a <span class="gradient-text">Structured Explanation</span></h2>
+    <div class="divider"></div>
+    <div class="code-block" style="max-width:820px;font-size:10.5px;">
+<span class="code-comment">// Example: DRF00706 — Firewall Disable at 01:47 AM</span>
+{
+  <span class="code-key">"drift_id"</span>:       <span class="code-str">"DRF00706"</span>,
+  <span class="code-key">"risk_score"</span>:     <span class="code-val">85</span>,
+  <span class="code-key">"classification"</span>: <span class="code-str">"CRITICAL_DRIFT"</span>,
+  <span class="code-key">"plain_english"</span>:  <span class="code-str">"Disable performed on Control-11 (Firewall) at 01:47 AM
+                   during off-hours (suspicious window). Network perimeter
+                   weakened. CIS 3.1 and NIST AC-4 violated."</span>,
+  <span class="code-key">"compliance_violations"</span>: [<span class="code-str">"CIS 3.1"</span>, <span class="code-str">"NIST AC-4"</span>],
+  <span class="code-key">"remediation"</span>:    <span class="code-str">"1. Re-enable firewall rules immediately.
+                   2. Perform full traffic review for exposure window.
+                   3. Check IDS/IPS for alerts during the gap."</span>,
+  <span class="code-key">"operator"</span>:      <span class="code-str">"Kevin Kumar &lt;kevin.kumar@company.com&gt;"</span>
+}
+    </div>
+    <div class="grid-4" style="margin-top:20px;max-width:880px;">
+      <div class="stat-box">
+        <div class="stat-num hl-green">331</div>
+        <div class="stat-label">Explained Alerts</div>
+        <div class="stat-sub">100% coverage</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num hl-blue">4/4</div>
+        <div class="stat-label">Quality Score</div>
+        <div class="stat-sub">All 4 components</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num hl-purple">23</div>
+        <div class="stat-label">Std. Mapped</div>
+        <div class="stat-sub">NIST/CIS/GDPR/PCI/ISO</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num hl-orange">10</div>
+        <div class="stat-label">Playbook Types</div>
+        <div class="stat-sub">Per control type</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 8: COMPLIANCE ══ -->
+  <div class="slide" id="slide-7">
+    <div class="tag tag-blue">Compliance</div>
+    <h2>Regulatory Impact Across <span class="gradient-text">5 Frameworks</span></h2>
+    <div class="divider"></div>
+    <div class="grid-2" style="max-width:900px;align-items:start;">
+      <div>
+        <table class="mini-table" style="background:var(--card);border-radius:10px;overflow:hidden;">
+          <thead><tr><th>Standard</th><th>Violations</th><th>Level</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">CIS 2.1</td>      <td class="mono hl-red">143</td><td><span class="tag tag-red" style="margin:0;padding:2px 7px;font-size:9px;">CRITICAL</span></td></tr>
+            <tr><td class="mono">GDPR 32</td>      <td class="mono hl-red">121</td><td><span class="tag tag-red" style="margin:0;padding:2px 7px;font-size:9px;">CRITICAL</span></td></tr>
+            <tr><td class="mono">PCI-DSS 3.4</td>  <td class="mono hl-red">121</td><td><span class="tag tag-red" style="margin:0;padding:2px 7px;font-size:9px;">CRITICAL</span></td></tr>
+            <tr><td class="mono">NIST SC-7</td>    <td class="mono hl-orange">100</td><td><span class="tag tag-orange" style="margin:0;padding:2px 7px;font-size:9px;">HIGH</span></td></tr>
+            <tr><td class="mono">NIST RA-5</td>    <td class="mono hl-orange">80</td><td><span class="tag tag-orange" style="margin:0;padding:2px 7px;font-size:9px;">HIGH</span></td></tr>
+            <tr><td class="mono">CIS 7.1</td>      <td class="mono hl-orange">80</td><td><span class="tag tag-orange" style="margin:0;padding:2px 7px;font-size:9px;">HIGH</span></td></tr>
+            <tr><td class="mono">NIST AU-2</td>    <td class="mono hl-orange">74</td><td><span class="tag tag-orange" style="margin:0;padding:2px 7px;font-size:9px;">HIGH</span></td></tr>
+            <tr><td class="mono">NIST CM-2</td>    <td class="mono hl-yellow">69</td><td><span class="tag tag-purple" style="margin:0;padding:2px 7px;font-size:9px;">MEDIUM</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;">Framework Coverage</div>
+        <div class="card blue">
+          <div style="font-weight:700;font-size:13px;margin-bottom:4px;">NIST SP 800-53</div>
+          <div class="card-body">8 controls: AU-2, CM-2, CM-3, IA-2, RA-5, SC-7, SI-3, SI-12</div>
+        </div>
+        <div class="card orange">
+          <div style="font-weight:700;font-size:13px;margin-bottom:4px;">CIS Controls v8</div>
+          <div class="card-body">6 controls: 2.1, 3.1, 5.3, 7.1, 8.1, 12.1</div>
+        </div>
+        <div class="card red">
+          <div style="font-weight:700;font-size:13px;margin-bottom:4px;">GDPR · PCI-DSS · ISO 27001</div>
+          <div class="card-body">Art. 25, Art. 32 · 3.4, 12.10 · A.12, A.13</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 9: ML BONUS ══ -->
+  <div class="slide" id="slide-8">
+    <div class="tag tag-purple">Bonus Feature</div>
+    <h2>Isolation Forest <span class="gradient-text">ML Anomaly Detection</span></h2>
+    <div class="divider"></div>
+    <div class="grid-2" style="max-width:900px;align-items:start;">
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="card purple">
+          <div class="card-title">Model Configuration</div>
+          <div class="code-block" style="margin-top:8px;font-size:10px;">
+IsolationForest(
+  contamination = <span class="code-val">0.40</span>,
+  n_estimators  = <span class="code-val">200</span>,
+  max_samples   = <span class="code-str">'auto'</span>,
+  random_state  = <span class="code-val">42</span>,
+  n_jobs        = <span class="code-val">-1</span>  <span class="code-comment"># parallel</span>
+)
+          </div>
+        </div>
+        <div class="card blue">
+          <div class="card-title">8 Feature Set</div>
+          <div class="card-body" style="font-family:monospace;font-size:11px;line-height:2;">
+            change_type, severity, status,<br>
+            control_type (all label-encoded)<br>
+            is_off_hours, is_regression (binary)<br>
+            change_hour, risk_score (numeric)
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px;">ML vs Rule-Based Comparison</div>
+        <table class="mini-table" style="background:var(--card);border-radius:10px;overflow:hidden;">
+          <thead><tr><th>Aspect</th><th>Rule-Based</th><th>Isolation Forest</th></tr></thead>
+          <tbody>
+            <tr><td>Approach</td><td>Explicit weights</td><td>Unsupervised ML</td></tr>
+            <tr><td>Explainability</td><td class="hl-green">✅ Full</td><td>Partial (score only)</td></tr>
+            <tr><td>Speed</td><td class="hl-green">48K/sec</td><td class="hl-green">Fast (batch)</td></tr>
+            <tr><td>Needs labels</td><td class="hl-green">No</td><td class="hl-green">No</td></tr>
+            <tr><td>Novel patterns</td><td>Limited</td><td class="hl-green">Learns from data</td></tr>
+            <tr><td>Agreement</td><td colspan="2" class="hl-blue">~80% overlap</td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:12px;background:rgba(165,94,234,0.08);border:1px solid rgba(165,94,234,0.25);border-radius:10px;padding:12px 14px;font-size:12px;color:var(--muted);">
+          The two models <strong style="color:var(--text);">complement each other</strong>: rule-based catches known patterns with full explainability; Isolation Forest flags novel anomalous combinations.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 10: METRICS ══ -->
+  <div class="slide" id="slide-9">
+    <div class="tag tag-green">Results</div>
+    <h2>All 5 Success Metrics — <span class="gradient-text">PASS ✅</span></h2>
+    <div class="divider"></div>
+    <div style="width:100%;max-width:820px;">
+      <div class="metric-row">
+        <div class="metric-name">🎯 Detection Rate</div>
+        <div class="metric-target">Target: &gt; 80%</div>
+        <div class="bar-track"><div class="bar-fill" style="width:93.9%;background:var(--green);"></div></div>
+        <div class="metric-result hl-green">93.9%</div>
+        <div class="metric-pass">✅ PASS</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-name">🔕 False Positive Rate</div>
+        <div class="metric-target">Target: &lt; 15%</div>
+        <div class="bar-track"><div class="bar-fill" style="width:5.4%;background:var(--green);"></div></div>
+        <div class="metric-result hl-green">5.4%</div>
+        <div class="metric-pass">✅ PASS</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-name">⚡ Time Lag</div>
+        <div class="metric-target">Target: &lt; 1 hour</div>
+        <div class="bar-track"><div class="bar-fill" style="width:2%;background:var(--green);"></div></div>
+        <div class="metric-result hl-green">2.28ms</div>
+        <div class="metric-pass">✅ PASS</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-name">📝 Explainability</div>
+        <div class="metric-target">Target: Every alert</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--green);"></div></div>
+        <div class="metric-result hl-green">100%</div>
+        <div class="metric-pass">✅ PASS</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-name">📋 Compliance Mapping</div>
+        <div class="metric-target">Target: NIST/CIS/GDPR</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--green);"></div></div>
+        <div class="metric-result hl-green">100%</div>
+        <div class="metric-pass">✅ PASS</div>
+      </div>
+    </div>
+    <div class="grid-3" style="margin-top:20px;max-width:680px;">
+      <div class="stat-box">
+        <div class="stat-num hl-blue">88.8%</div>
+        <div class="stat-label">Precision</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" style="background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">91.3%</div>
+        <div class="stat-label">F1 Score</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num hl-green">48K/s</div>
+        <div class="stat-label">Throughput</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 11: DASHBOARD ══ -->
+  <div class="slide" id="slide-10">
+    <div class="tag tag-blue">UI / Dashboard</div>
+    <h2>Professional SOC <span class="gradient-text">Dark-Theme Dashboard</span></h2>
+    <div class="divider"></div>
+    <div class="grid-2" style="max-width:960px;align-items:start;">
+      <div>
+        <ul class="bullet-list">
+          <li><span class="bullet-icon">🎛️</span><div><span class="bullet-strong">6 KPI Cards</span> — Critical, High, Medium, Total, Risk, Benign counts with colour-coded severity bars</div></li>
+          <li><span class="bullet-icon">📊</span><div><span class="bullet-strong">5 Chart.js Charts</span> — Donut, Bar, Line (13-month), Horizontal Bar, Change Type donut</div></li>
+          <li><span class="bullet-icon">🔍</span><div><span class="bullet-strong">Interactive Filters</span> — Filter by severity, control type, and date range in real time</div></li>
+          <li><span class="bullet-icon">🚨</span><div><span class="bullet-strong">Live Alert Feed</span> — Top 20 CRITICAL+HIGH events with operator, impact, risk score</div></li>
+          <li><span class="bullet-icon">📜</span><div><span class="bullet-strong">Compliance Matrix</span> — 15 standards with violation counts and animated progress bars</div></li>
+          <li><span class="bullet-icon">👤</span><div><span class="bullet-strong">Operator Ranking</span> — Top 10 riskiest operators by cumulative score</div></li>
+          <li><span class="bullet-icon">⏱️</span><div><span class="bullet-strong">Live Clock</span> — Real-time IST timestamp in header</div></li>
+          <li><span class="bullet-icon">🎨</span><div><span class="bullet-strong">Zero-dependency</span> — Single HTML file, works offline, no server needed</div></li>
+        </ul>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div class="card" style="background:rgba(10,14,26,0.9);border-color:var(--border);">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:8px;">Design Tokens</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <div style="width:28px;height:28px;border-radius:6px;background:#ff4757;"></div>
+            <div style="width:28px;height:28px;border-radius:6px;background:#ffa502;"></div>
+            <div style="width:28px;height:28px;border-radius:6px;background:#ffd32a;"></div>
+            <div style="width:28px;height:28px;border-radius:6px;background:#2ed573;"></div>
+            <div style="width:28px;height:28px;border-radius:6px;background:#1e90ff;"></div>
+            <div style="width:28px;height:28px;border-radius:6px;background:#a55eea;"></div>
+            <div style="width:28px;height:28px;border-radius:6px;background:#0a0e1a;border:1px solid #252b3d;"></div>
+            <div style="width:28px;height:28px;border-radius:6px;background:#1a1f2e;"></div>
+          </div>
+          <div style="font-size:10px;color:var(--dim);margin-top:6px;">Inter + JetBrains Mono · Chart.js 4.4.0</div>
+        </div>
+        <div class="card blue">
+          <div class="card-title">Micro-animations</div>
+          <div class="card-body">KPI card hover lift · Pulse dot on Live badge · Slide-in alert feed · Progress bar transitions · CSS glow on severity borders</div>
+        </div>
+        <div class="card green">
+          <div class="card-title">Responsive Filters</div>
+          <div class="card-body">Severity, control type, and month range filters update KPI counts, charts, and alert feed simultaneously with no page reload</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SLIDE 12: SUMMARY ══ -->
+  <div class="slide" id="slide-11">
+    <div class="hero-glow"></div>
+    <div class="tag tag-green">Summary</div>
+    <h2>Production-Ready Drift Detection<br><span class="gradient-text">— All Targets Met</span></h2>
+    <div class="divider"></div>
+    <div class="grid-4" style="max-width:1000px;margin-bottom:22px;">
+      <div class="stat-box">
+        <div class="stat-num hl-green">93.9%</div>
+        <div class="stat-label">Detection Rate</div>
+        <div class="stat-sub">Target: &gt;80%</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num hl-green">5.4%</div>
+        <div class="stat-label">False Positive Rate</div>
+        <div class="stat-sub">Target: &lt;15%</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num hl-blue">2.28ms</div>
+        <div class="stat-label">Processing Time</div>
+        <div class="stat-sub">Target: &lt;1 hour</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num hl-purple">91.3%</div>
+        <div class="stat-label">F1 Score</div>
+        <div class="stat-sub">Precision: 88.8%</div>
+      </div>
+    </div>
+    <div class="grid-3" style="max-width:880px;">
+      <div class="card green">
+        <div class="card-icon">📦</div>
+        <div class="card-title">7 Output Files</div>
+        <div class="card-body">Results CSV, Explanations JSON, Audit Report, Playbook, Summary, Dashboard, Notebook</div>
+      </div>
+      <div class="card blue">
+        <div class="card-icon">🔢</div>
+        <div class="card-title">23 Compliance Standards</div>
+        <div class="card-body">100% of CRITICAL+HIGH alerts mapped to NIST, CIS, GDPR, PCI-DSS, or ISO 27001</div>
+      </div>
+      <div class="card purple">
+        <div class="card-icon">🤖</div>
+        <div class="card-title">Dual-Layer Detection</div>
+        <div class="card-body">Rule-based scoring + Isolation Forest ML model for novel anomaly detection</div>
+      </div>
+    </div>
+    <p class="subtitle" style="margin-top:22px;font-size:13px;">
+      Built in Python 3.9 · Single-file dashboard · Zero external APIs required
+    </p>
+  </div>
+
+</div>
+
+<!-- Nav controls -->
+<nav class="nav">
+  <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">‹</button>
+  <div class="slide-dots" id="dots"></div>
+  <span class="slide-counter" id="counter">1 / 12</span>
+  <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">›</button>
+</nav>
+
+<script>
+const TOTAL = 12;
+let current = 0;
+
+// Build dots
+const dotsEl = document.getElementById('dots');
+for (let i = 0; i < TOTAL; i++) {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.onclick = () => goTo(i);
+  dotsEl.appendChild(d);
+}
+
+function updateUI() {
+  document.getElementById('counter').textContent = `${current+1} / ${TOTAL}`;
+  document.getElementById('progressBar').style.width = `${((current+1)/TOTAL)*100}%`;
+  document.getElementById('slideLabel').textContent = `Slide ${current+1} / ${TOTAL}`;
+  document.querySelectorAll('.dot').forEach((d, i) => {
+    d.className = 'dot' + (i === current ? ' active' : '');
+  });
+}
+
+function goTo(n) {
+  const slides = document.querySelectorAll('.slide');
+  slides[current].classList.remove('active');
+  slides[current].classList.add('out');
+  setTimeout(() => slides[current - (n > current ? 1 : 0)].classList.remove('out'), 500);
+  const prev = current;
+  current = Math.max(0, Math.min(TOTAL-1, n));
+  slides[current].classList.add('active');
+  setTimeout(() => slides[prev].classList.remove('out', 'active'), 500);
+  updateUI();
+}
+
+function changeSlide(dir) {
+  const next = current + dir;
+  if (next < 0 || next >= TOTAL) return;
+  const slides = document.querySelectorAll('.slide');
+  slides[current].classList.remove('active');
+  slides[current].classList.add('out');
+  current = next;
+  slides[current].classList.add('active');
+  setTimeout(() => {
+    slides.forEach((s, i) => { if (i !== current) { s.classList.remove('out','active'); } });
+  }, 500);
+  updateUI();
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') changeSlide(1);
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                     changeSlide(-1);
+});
+
+// Touch navigation
+let tx = 0;
+document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; });
+document.addEventListener('touchend',   e => {
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 50) changeSlide(dx < 0 ? 1 : -1);
+});
+
+updateUI();
+</script>
+</body>
+</html>

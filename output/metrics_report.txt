@@ -1,0 +1,109 @@
+========================================================================
+ SECURITY DRIFT DETECTION – SUCCESS METRICS EVALUATION REPORT
+========================================================================
+ Generated  : 2026-06-14 18:25:04
+ Ground truth: Rule-derived from event signals (313 anomalies, 687 benign)
+
+── SCORECARD ─────────────────────────────────────────────────────────
+  Metric                              Result       Target             Status
+  --------------------------------------------------------------------
+  Detection Rate (Recall)             93.9%        > 80%              ✅  PASS
+  False Positive Rate                 5.4%         < 15%              ✅  PASS
+  Time Lag (Processing Speed)         2.28ms for 1,000 events < 1 hour           ✅  PASS
+  Explainability Coverage             100.0%       100% (every alert has reason) ✅  PASS
+  Compliance Mapping Coverage         100.0%       Drifts → NIST/CIS/GDPR ✅  PASS
+
+  OVERALL: ALL METRICS PASS ✅
+
+── DETECTION RATE (RECALL) ─────────────────────────────────────────
+   Result  : 93.9%
+   Target  : > 80%
+   Status  : ✅  PASS
+   Details : Caught 294 of 313 truly risky events. Missed 19.
+   Confusion Matrix:
+     True Positives  (TP) :   294  ← Correctly flagged risky events
+     False Positives (FP) :    37  ← Benign events wrongly flagged
+     True Negatives  (TN) :   650  ← Correctly ignored benign events
+     False Negatives (FN) :    19  ← Risky events we MISSED
+   Precision : 88.8%
+   Recall    : 93.9%  (= Detection Rate)
+   F1 Score  : 91.3%
+
+── FALSE POSITIVE RATE ─────────────────────────────────────────
+   Result  : 5.4%
+   Target  : < 15%
+   Status  : ✅  PASS
+   Details : Wrongly flagged 37 of 687 benign events.
+
+── TIME LAG (PROCESSING SPEED) ─────────────────────────────────────────
+   Result  : 2.28ms for 1,000 events
+   Target  : < 1 hour
+   Status  : ✅  PASS
+   Details : Avg 2.28ms for 1,000 events (2.28µs/event). Scales to 22.8ms for 10K events. Target < 1 hour: FAR exceeded.
+   Timing breakdown:
+     Total (1,000 events) : 2.28ms
+     Per event            : 2.28µs
+     Throughput           : 438,035 events/sec
+     Scaled (10K events)  : 22.8ms
+     Scaled (100K events) : 228ms  (~0.2s)
+
+── EXPLAINABILITY COVERAGE ─────────────────────────────────────────
+   Result  : 100.0%
+   Target  : 100% (every alert has reason)
+   Status  : ✅  PASS
+   Details : 331/331 CRITICAL+HIGH alerts explained (plain-English: 331, compliance: 331, remediation: 331, operator: 331). Avg quality: 4.0/4 components.
+
+── COMPLIANCE MAPPING COVERAGE ─────────────────────────────────────────
+   Result  : 100.0%
+   Target  : Drifts → NIST/CIS/GDPR
+   Status  : ✅  PASS
+   Details : 331/331 alerts mapped to compliance standards. 331 alerts map to ≥2 standards. Frameworks covered: NIST, CIS, GDPR, PCI, ISO. 23 unique standards referenced.
+   Framework coverage:
+     NIST      335 alerts mapped
+     CIS       272 alerts mapped
+     GDPR      127 alerts mapped
+     PCI        81 alerts mapped
+     ISO        62 alerts mapped
+   Top standards:
+     CIS 2.1                     83 violations
+     GDPR 32                     55 violations
+     PCI-DSS 3.4                 55 violations
+     NIST SC-7                   50 violations
+     NIST CM-2                   43 violations
+     NIST AU-2                   40 violations
+
+── FALSE POSITIVE ANALYSIS ───────────────────────────────────────────
+   Total FPs: 37  (events wrongly flagged as risky)
+   Common patterns in false positives:
+     change_type=Modify: 11 FPs
+     change_type=Disable: 10 FPs
+     change_type=Remove: 8 FPs
+     severity=Critical: 34 FPs
+     severity=High: 3 FPs
+   Top 5 false positive examples:
+     [DRF00847] Control-9 (Endpoint) | Critical | Remove | status=Compliant | score=60
+     [DRF00561] Control-55 (Access_Control) | Critical | Disable | status=Compliant | score=55
+     [DRF00822] Control-84 (Firewall) | Critical | Disable | status=Remediated | score=65
+     [DRF00729] Control-23 (Access_Control) | Critical | Disable | status=Remediated | score=75
+     [DRF00814] Control-54 (Cloud_Security) | Critical | Modify | status=Remediated | score=50
+
+── FALSE NEGATIVE ANALYSIS (MISSED DRIFTS) ──────────────────────────
+   Total FNs: 19  (risky events we missed)
+   Missed drift patterns:
+     change_type=Rollback: 10 missed
+     change_type=Enable: 6 missed
+     change_type=Update: 2 missed
+   Top 5 missed events:
+     [DRF00651] Control-13 (Logging) | High | Rollback | score=45
+     [DRF00813] Control-85 (Cloud_Security) | Critical | Enable | score=40
+     [DRF00630] Control-2 (Access_Control) | High | Enable | score=40
+     [DRF00629] Control-74 (Cloud_Security) | High | Rollback | score=45
+     [DRF00804] Control-12 (Endpoint) | High | Update | score=40
+
+========================================================================
+  HOW TO IMPROVE (if any metric fails):
+  Detection Rate low  → lower THRESHOLD_HIGH/THRESHOLD_CRITICAL in drift_detector.py
+  FPR too high        → raise thresholds OR add whitelist for Enable+Compliant events
+  Explainability gaps → ensure drift_detector.py ExplainabilityEngine ran successfully
+  Compliance gaps     → verify COMPLIANCE_MAP in drift_detector.py covers all control_types
+========================================================================
