@@ -429,9 +429,9 @@ def analyse_false_negatives(results: list, truth: dict) -> list:
 
 # ── Report Writers ────────────────────────────────────────────────────────────
 
-PASS_ICON = "✅  PASS"
-FAIL_ICON = "❌  FAIL"
-WARN_ICON = "⚠️   WARN"
+PASS_ICON = "  PASS"
+FAIL_ICON = "  FAIL"
+WARN_ICON = "   WARN"
 
 
 def write_text_report(metrics: list, fps: list, fns: list, path: Path, truth_source: str):
@@ -457,7 +457,7 @@ def write_text_report(metrics: list, fps: list, fns: list, path: Path, truth_sou
             f"  {m['metric']:<35} {m['pct']:<12} {m['target']:<18} {icon}"
         )
     lines.append("")
-    overall = "ALL METRICS PASS ✅" if all_pass else "SOME METRICS NEED ATTENTION ⚠️"
+    overall = "ALL METRICS PASS " if all_pass else "SOME METRICS NEED ATTENTION "
     lines.append(f"  OVERALL: {overall}")
     lines.append("")
 
@@ -518,7 +518,7 @@ def write_text_report(metrics: list, fps: list, fns: list, path: Path, truth_sou
                 f"| {fp['severity']} | {fp['change_type']} | status={fp['status']} | score={fp['risk_score']}"
             )
     else:
-        lines.append("   No false positives found ✅")
+        lines.append("   No false positives found ")
     lines.append("")
 
     # False negative analysis
@@ -537,7 +537,7 @@ def write_text_report(metrics: list, fps: list, fns: list, path: Path, truth_sou
                 f"| {fn['severity']} | {fn['change_type']} | score={fn['risk_score']}"
             )
     else:
-        lines.append("   No missed risky events ✅")
+        lines.append("   No missed risky events ")
     lines.append("")
 
     lines.append(sep)
@@ -556,24 +556,24 @@ def write_text_report(metrics: list, fps: list, fns: list, path: Path, truth_sou
 def write_scorecard_md(metrics: list, fps: list, fns: list, path: Path, truth_source: str):
     """Write a clean judge-ready markdown scorecard."""
     lines = []
-    lines.append("# 🛡️ Drift Detection – Success Metrics Scorecard\n\n")
+    lines.append("#  Drift Detection – Success Metrics Scorecard\n\n")
     lines.append(f"> **Generated:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}  \n")
     lines.append(f"> **Ground Truth:** {truth_source}  \n")
     lines.append(f"> **Dataset:** 1,000 drift events, Apr 2025 – Apr 2026\n\n")
     lines.append("---\n\n")
 
     # Summary table
-    lines.append("## 📊 Metrics Summary\n\n")
+    lines.append("##  Metrics Summary\n\n")
     lines.append("| # | Metric | Target | Result | Status |\n")
     lines.append("|---|--------|--------|--------|--------|\n")
     for i, m in enumerate(metrics, 1):
-        icon = "✅ **PASS**" if m["pass"] else "❌ **FAIL**"
+        icon = " **PASS**" if m["pass"] else " **FAIL**"
         lines.append(f"| {i} | **{m['metric']}** | {m['target']} | **{m['pct']}** | {icon} |\n")
     lines.append("\n---\n\n")
 
     # Detailed sections
     for m in metrics:
-        status = "✅ PASS" if m["pass"] else "❌ FAIL"
+        status = " PASS" if m["pass"] else " FAIL"
         lines.append(f"## Metric: {m['metric']}\n\n")
         lines.append(f"**Result:** `{m['pct']}` &nbsp;|&nbsp; **Target:** `{m['target']}` &nbsp;|&nbsp; **{status}**\n\n")
         lines.append(f"{m['note']}\n\n")
@@ -582,8 +582,8 @@ def write_scorecard_md(metrics: list, fps: list, fns: list, path: Path, truth_so
             lines.append("### Confusion Matrix\n\n")
             lines.append("| | Predicted Risky | Predicted Benign |\n")
             lines.append("|--|----------------|------------------|\n")
-            lines.append(f"| **Actually Risky** | TP = {m['tp']} ✅ | FN = {m['fn']} ❌ |\n")
-            lines.append(f"| **Actually Benign** | FP = {m['fp']} ⚠️ | TN = {m['tn']} ✅ |\n\n")
+            lines.append(f"| **Actually Risky** | TP = {m['tp']}  | FN = {m['fn']}  |\n")
+            lines.append(f"| **Actually Benign** | FP = {m['fp']}  | TN = {m['tn']}  |\n\n")
             lines.append(f"| Metric | Value |\n|--------|-------|\n")
             lines.append(f"| Precision | {m['precision']*100:.1f}% |\n")
             lines.append(f"| Recall (Detection Rate) | {m['value']*100:.1f}% |\n")
@@ -613,7 +613,7 @@ def write_scorecard_md(metrics: list, fps: list, fns: list, path: Path, truth_so
         lines.append("---\n\n")
 
     # FP analysis
-    lines.append("## ⚠️ False Positive Analysis\n\n")
+    lines.append("##  False Positive Analysis\n\n")
     if fps:
         lines.append(f"**{len(fps)} false positives** — events our model flagged as risky but were benign.\n\n")
         fp_types = Counter(fp["change_type"] for fp in fps).most_common(3)
@@ -627,7 +627,7 @@ def write_scorecard_md(metrics: list, fps: list, fns: list, path: Path, truth_so
         lines.append(f"\n> **Fix:** Add a whitelist for `Enable + Compliant` events; "
                      f"these are security improvements and should not be flagged.\n\n")
     else:
-        lines.append("✅ No false positives detected.\n\n")
+        lines.append(" No false positives detected.\n\n")
     lines.append("---\n\n")
 
     # FN analysis
@@ -636,7 +636,7 @@ def write_scorecard_md(metrics: list, fps: list, fns: list, path: Path, truth_so
         lines.append(f"**{len(fns)} missed drifts** — risky events our model didn't catch.\n\n")
         lines.append(f"> **Fix:** Lower `THRESHOLD_MEDIUM` from 30 to 25 to catch borderline cases.\n\n")
     else:
-        lines.append("✅ No missed risky drifts.\n\n")
+        lines.append(" No missed risky drifts.\n\n")
     lines.append("---\n\n")
 
     # How to improve
@@ -709,7 +709,7 @@ def main():
     print(f"  {'Metric':<38} {'Result':<12} {'Target':<18} {'Status'}")
     print("  " + "-" * 68)
     for m in metrics:
-        icon = "PASS ✅" if m["pass"] else "FAIL ❌"
+        icon = "PASS " if m["pass"] else "FAIL "
         print(f"  {m['metric']:<38} {m['pct']:<12} {m['target']:<18} {icon}")
     print()
 
@@ -734,7 +734,7 @@ def main():
     all_pass = all(m["pass"] for m in metrics)
     print("=" * 72)
     if all_pass:
-        print("  VERDICT: ALL 5 SUCCESS METRICS PASSED ✅")
+        print("  VERDICT: ALL 5 SUCCESS METRICS PASSED ")
     else:
         failed = [m["metric"] for m in metrics if not m["pass"]]
         print(f"  VERDICT: {len(failed)} metric(s) need attention: {', '.join(failed)}")

@@ -265,7 +265,7 @@
 <header>
   <div class="hdr-inner">
     <div class="logo">
-      <div class="logo-box">🛡</div>
+      <div class="logo-box"></div>
       <div>
         <div class="logo-title">Security Control Health Monitor</div>
         <div class="logo-sub">SOC Dashboard v2 · Societe Generale</div>
@@ -280,12 +280,12 @@
 
 <!-- NAV TABS -->
 <nav class="nav-tabs">
-  <div class="nav-tab active" id="tab-overview"  onclick="switchTab('overview')">📊 Overview</div>
-  <div class="nav-tab" id="tab-health"    onclick="switchTab('health')">🟢 Control Health (200)</div>
-  <div class="nav-tab" id="tab-timeline"  onclick="switchTab('timeline')">⏱ Drift Timeline</div>
-  <div class="nav-tab" id="tab-alerts"    onclick="switchTab('alerts')">🚨 Alert Queue</div>
-  <div class="nav-tab" id="tab-hotspots"  onclick="switchTab('hotspots')">🔥 Risk Hotspots</div>
-  <div class="nav-tab" id="tab-compliance"onclick="switchTab('compliance')">📜 Compliance</div>
+  <div class="nav-tab active" id="tab-overview"  onclick="switchTab('overview')"> Overview</div>
+  <div class="nav-tab" id="tab-health"    onclick="switchTab('health')"> Control Health (200)</div>
+  <div class="nav-tab" id="tab-timeline"  onclick="switchTab('timeline')"> Drift Timeline</div>
+  <div class="nav-tab" id="tab-alerts"    onclick="switchTab('alerts')"> Alert Queue</div>
+  <div class="nav-tab" id="tab-hotspots"  onclick="switchTab('hotspots')"> Risk Hotspots</div>
+  <div class="nav-tab" id="tab-compliance"onclick="switchTab('compliance')"> Compliance</div>
 </nav>
 
 <main>
@@ -294,12 +294,12 @@
 <div class="view active" id="view-overview">
 
   <div class="kpi-row">
-    <div class="kpi c-red">  <div class="kpi-lbl">🔴 Critical Drift</div><div class="kpi-val">111</div><div class="kpi-sub">11.1% of events</div></div>
-    <div class="kpi c-orange"><div class="kpi-lbl">🟠 High Drift</div>   <div class="kpi-val">220</div><div class="kpi-sub">22.0% of events</div></div>
-    <div class="kpi c-yellow"><div class="kpi-lbl">🟡 Medium Drift</div> <div class="kpi-val">382</div><div class="kpi-sub">38.2% of events</div></div>
-    <div class="kpi c-blue">  <div class="kpi-lbl">📋 Total Events</div> <div class="kpi-val">1,000</div><div class="kpi-sub">Apr 2025–Apr 2026</div></div>
-    <div class="kpi c-purple"><div class="kpi-lbl">🚨 Actionable Alerts</div><div class="kpi-val">167</div><div class="kpi-sub">P1–P4 alerts</div></div>
-    <div class="kpi c-green"> <div class="kpi-lbl">⚡ Speed</div>        <div class="kpi-val">48K/s</div><div class="kpi-sub">events per second</div></div>
+    <div class="kpi c-red">  <div class="kpi-lbl"> Critical Drift</div><div class="kpi-val">111</div><div class="kpi-sub">11.1% of events</div></div>
+    <div class="kpi c-orange"><div class="kpi-lbl"> High Drift</div>   <div class="kpi-val">220</div><div class="kpi-sub">22.0% of events</div></div>
+    <div class="kpi c-yellow"><div class="kpi-lbl"> Medium Drift</div> <div class="kpi-val">382</div><div class="kpi-sub">38.2% of events</div></div>
+    <div class="kpi c-blue">  <div class="kpi-lbl"> Total Events</div> <div class="kpi-val">1,000</div><div class="kpi-sub">Apr 2025–Apr 2026</div></div>
+    <div class="kpi c-purple"><div class="kpi-lbl"> Actionable Alerts</div><div class="kpi-val">167</div><div class="kpi-sub">P1–P4 alerts</div></div>
+    <div class="kpi c-green"> <div class="kpi-lbl"> Speed</div>        <div class="kpi-val">48K/s</div><div class="kpi-sub">events per second</div></div>
   </div>
 
   <div class="grid-2">
@@ -399,7 +399,7 @@
   </div>
 
   <div class="sec-hdr">
-    <div class="sec-title">⏱ Drift Events — Chronological Feed <span class="sec-count" id="tlCount">Top 80 events</span></div>
+    <div class="sec-title"> Drift Events — Chronological Feed <span class="sec-count" id="tlCount">Top 80 events</span></div>
   </div>
   <div class="timeline-feed" id="timelineFeed"><!-- populated by JS --></div>
 </div>
@@ -421,14 +421,14 @@
   </div>
 
   <div class="kpi-row" style="grid-template-columns:repeat(4,1fr);margin-bottom:16px;">
-    <div class="kpi c-red">  <div class="kpi-lbl">🔴 P1 — Page Now</div>  <div class="kpi-val">7</div><div class="kpi-sub">SLA: 15 min</div></div>
-    <div class="kpi c-red">  <div class="kpi-lbl">🔴 P2 — CRITICAL</div>  <div class="kpi-val">71</div><div class="kpi-sub">SLA: 60 min</div></div>
-    <div class="kpi c-orange"><div class="kpi-lbl">🟠 P3/P4 — HIGH</div>  <div class="kpi-val">89</div><div class="kpi-sub">SLA: 60 min</div></div>
-    <div class="kpi c-yellow"><div class="kpi-lbl">🟡 P5/P6 — MEDIUM</div><div class="kpi-val">546</div><div class="kpi-sub">SLA: 4–24 hr</div></div>
+    <div class="kpi c-red">  <div class="kpi-lbl"> P1 — Page Now</div>  <div class="kpi-val">7</div><div class="kpi-sub">SLA: 15 min</div></div>
+    <div class="kpi c-red">  <div class="kpi-lbl"> P2 — CRITICAL</div>  <div class="kpi-val">71</div><div class="kpi-sub">SLA: 60 min</div></div>
+    <div class="kpi c-orange"><div class="kpi-lbl"> P3/P4 — HIGH</div>  <div class="kpi-val">89</div><div class="kpi-sub">SLA: 60 min</div></div>
+    <div class="kpi c-yellow"><div class="kpi-lbl"> P5/P6 — MEDIUM</div><div class="kpi-val">546</div><div class="kpi-sub">SLA: 4–24 hr</div></div>
   </div>
 
   <div class="sec-hdr">
-    <div class="sec-title">🚨 Prioritised Alert Queue <span class="sec-count" id="aqCount">167 Actionable</span></div>
+    <div class="sec-title"> Prioritised Alert Queue <span class="sec-count" id="aqCount">167 Actionable</span></div>
   </div>
   <div class="alert-queue" id="alertQueue"><!-- populated by JS --></div>
 </div>
@@ -454,7 +454,7 @@
   </div>
 
   <div class="sec-hdr">
-    <div class="sec-title">🔥 Control-Level Risk Heatmap <span class="sec-count">100 controls shown</span></div>
+    <div class="sec-title"> Control-Level Risk Heatmap <span class="sec-count">100 controls shown</span></div>
     <div style="font-size:10px;color:var(--muted);">Green = low risk · Yellow = medium · Orange = high · Red = critical</div>
   </div>
   <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px;margin-bottom:18px;">
@@ -491,7 +491,7 @@
     </div>
   </div>
 
-  <div class="sec-hdr"><div class="sec-title">📜 Compliance Standard Impact Table</div></div>
+  <div class="sec-hdr"><div class="sec-title"> Compliance Standard Impact Table</div></div>
   <div class="tbl-wrap">
     <table id="compTable">
       <thead><tr><th>Standard</th><th>Violations</th><th>Control Domains</th><th>Risk Level</th><th>Coverage</th></tr></thead>
@@ -871,11 +871,11 @@ function renderTimeline(){
     const div=document.createElement('div');
     div.className=`tl-event ${e.cls}`;
     div.innerHTML=`
-      <div class="tl-ts">${e.date}<br>${e.offHours?'<span style="color:#a55eea;font-size:9px">🌙 off-hrs</span>':''}</div>
+      <div class="tl-ts">${e.date}<br>${e.offHours?'<span style="color:#a55eea;font-size:9px"> off-hrs</span>':''}</div>
       <div class="tl-bar"></div>
       <div>
         <div class="tl-body-control">${e.id} · ${e.dom.replace('_',' ')}</div>
-        <div class="tl-body-detail">${e.sev} · ${e.chg} · Status: ${e.status} · ${e.op}${e.regression?' · <span style="color:#ffa502">↩ regression</span>':''}</div>
+        <div class="tl-body-detail">${e.sev} · ${e.chg} · Status: ${e.status} · ${e.op}${e.regression?' · <span style="color:#ffa502"> regression</span>':''}</div>
       </div>
       <div class="tl-score ${e.cls}">${e.score}</div>
     `;
@@ -902,7 +902,7 @@ function renderAlerts(){
       <div>
         <div class="aq-ctrl">${e.id} · ${e.dom.replace('_',' ')} · Score: ${e.score}</div>
         <div class="aq-detail">
-          ${e.sev} · ${e.chg} · Op: ${e.op}${e.offHours?' · <span style="color:#a55eea">🌙 Off-Hours</span>':''}
+          ${e.sev} · ${e.chg} · Op: ${e.op}${e.offHours?' · <span style="color:#a55eea"> Off-Hours</span>':''}
           <br>Escalate: ${e.escalation} · Compliance: ${e.compliance}
         </div>
       </div>

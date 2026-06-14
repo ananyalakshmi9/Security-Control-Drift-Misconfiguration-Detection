@@ -1,0 +1,60 @@
+======================================================================
+ SECURITY CONTROL DRIFT DETECTION – EXECUTIVE SUMMARY REPORT
+======================================================================
+ Generated   : 2026-06-14 21:00:53
+ Data period  : Apr 2025 – Apr 2026
+ Total events : 1,000
+
+── CLASSIFICATION BREAKDOWN ──────────────────────────────────────
+  CRITICAL_DRIFT  :   111  (11.1%)
+  HIGH_DRIFT      :   220  (22.0%)
+  MEDIUM_DRIFT    :   382  (38.2%)
+  BENIGN          :   287  (28.7%)
+
+── TOP 3 HIGHEST-RISK EVENTS ─────────────────────────────────────
+  1. [DRF00691] Control-33 (Endpoint) | Score: 135 | Critical | Disable | 2025-08-25 01:02:00
+  2. [DRF00908] Control-1 (Access_Control) | Score: 135 | Critical | Disable | 2025-11-16 04:58:00
+  3. [DRF00849] Control-13 (Data_Protection) | Score: 125 | High | Disable | 2025-12-24 03:53:00
+
+── RISK SIGNALS ──────────────────────────────────────────────────
+  Off-hours changes  : 136  (13.6%)
+  Regression changes : 508  (50.8%)
+
+── TOP 5 CONTROL TYPES BY VOLUME ─────────────────────────────────
+  Vulnerability                 124 events
+  Logging                       111 events
+  Cloud_Security                101 events
+  DLP                           101 events
+  Data_Protection               101 events
+
+── TOP 10 COMPLIANCE VIOLATIONS ──────────────────────────────────
+  CIS 2.1                            83 violations
+  GDPR 32                            55 violations
+  PCI-DSS 3.4                        55 violations
+  NIST SC-7                          50 violations
+  NIST CM-2                          43 violations
+  NIST AU-2                          40 violations
+  NIST SI-12                         40 violations
+  GDPR Article 32                    39 violations
+  NIST RA-5                          38 violations
+  CIS 7.1                            38 violations
+
+── TOP 5 RISKIEST OPERATORS ──────────────────────────────────────
+  jacob.becker@company.com                       Total risk: 210
+  meera.menon@company.com                        Total risk: 185
+  rohan.gonzalez@company.com                     Total risk: 180
+  anthony.choi@company.com                       Total risk: 155
+  elena.rodriguez@company.com                    Total risk: 155
+
+── RECOMMENDED IMMEDIATE ACTIONS ────────────────────────────────
+  1. Review all CRITICAL_DRIFT events immediately.
+  2. Escalate off-hours changes to CISO for investigation.
+  3. Audit all regressions (enabled->disabled) for malicious intent.
+  4. File compliance incident reports for GDPR/NIST violations.
+  5. Enforce change-management approval gates for high-criticality controls.
+
+======================================================================
+  See: drift_analysis_results.csv  — full event-level analysis
+  See: drift_explanations.json     — CRITICAL/HIGH structured explanations
+  See: remediation_playbook.md     — per-control-type fix procedures
+======================================================================

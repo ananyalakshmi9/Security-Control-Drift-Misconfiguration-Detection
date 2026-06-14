@@ -1,6 +1,6 @@
 # Security Control Drift – Full Audit Report
 
-> **Generated:** 2026-06-14 18:25:04  
+> **Generated:** 2026-06-14 21:00:53  
 > **Data Period:** April 2025 – April 2026  
 > **Events Analysed:** 1,000
 

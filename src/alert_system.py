@@ -175,8 +175,8 @@ def build_alert(r: dict, exp: Optional[dict], priority: str) -> dict:
 # ── Console Alert Formatter ───────────────────────────────────────────────────
 
 SEVERITY_COLOUR = {
-    "P1": "🔴🔴", "P2": "🔴", "P3": "🟠",
-    "P4": "🟠", "P5": "🟡", "P6": "🟡",
+    "P1": "", "P2": "", "P3": "",
+    "P4": "", "P5": "", "P6": "",
     "P7": "🔵", "P8": "⚪",
 }
 
@@ -218,7 +218,7 @@ def format_alert_console(a: dict, idx: int) -> str:
 def write_md_summary(alerts: list, path: Path, stats: dict):
     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     lines = [
-        "# 🚨 Security Alert Digest — SOC Priority Queue\n\n",
+        "#  Security Alert Digest — SOC Priority Queue\n\n",
         f"> **Generated:** {now}  \n",
         f"> **Total Alerts:** {len(alerts)}  \n",
         f"> **Dataset:** {stats['total_events']:,} drift events · Apr 2025 – Apr 2026\n\n",
@@ -358,14 +358,14 @@ def main():
     p5p6 = [a for a in alerts if a["priority"] in ("P5","P6")]
 
     console_lines.append(f"\n{'─'*72}")
-    console_lines.append(f"  ‼️  IMMEDIATE ACTION REQUIRED — {len(p1p2)} P1/P2 Alerts")
+    console_lines.append(f"    IMMEDIATE ACTION REQUIRED — {len(p1p2)} P1/P2 Alerts")
     console_lines.append(f"{'─'*72}\n")
     for i, a in enumerate(p1p2, 1):
         console_lines.append(format_alert_console(a, i))
         console_lines.append("")
 
     console_lines.append(f"\n{'─'*72}")
-    console_lines.append(f"  ⚠️   HIGH PRIORITY — {len(p3p4)} P3/P4 Alerts (resolve within 1 hour)")
+    console_lines.append(f"     HIGH PRIORITY — {len(p3p4)} P3/P4 Alerts (resolve within 1 hour)")
     console_lines.append(f"{'─'*72}\n")
     for i, a in enumerate(p3p4[:20], 1):  # show top 20
         console_lines.append(format_alert_console(a, i))
@@ -374,7 +374,7 @@ def main():
         console_lines.append(f"  ... and {len(p3p4)-20} more P3/P4 alerts. See alerts.json for full list.")
 
     console_lines.append(f"\n{'─'*72}")
-    console_lines.append(f"  📋  STANDARD QUEUE — {len(p5p6)} P5/P6 Alerts (schedule review)")
+    console_lines.append(f"    STANDARD QUEUE — {len(p5p6)} P5/P6 Alerts (schedule review)")
     console_lines.append(f"{'─'*72}")
     console_lines.append(f"  {len(p5p6)} P5-P6 alerts not shown. See alerts.json.")
 

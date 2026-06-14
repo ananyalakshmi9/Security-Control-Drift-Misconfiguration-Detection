@@ -49,7 +49,7 @@ cells = []
 
 # ── Cell 1: Title
 cells.append(md(
-    "# 🛡️ Security Control Drift Detection – Analysis Notebook\n\n"
+    "#  Security Control Drift Detection – Analysis Notebook\n\n"
     "**Societe Generale Enterprise Security Hackathon – Problem 02**\n\n"
     "This notebook covers:\n"
     "1. Data loading and EDA\n"

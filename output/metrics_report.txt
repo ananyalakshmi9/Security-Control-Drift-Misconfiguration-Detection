@@ -1,7 +1,7 @@
 ========================================================================
  SECURITY DRIFT DETECTION – SUCCESS METRICS EVALUATION REPORT
 ========================================================================
- Generated  : 2026-06-14 18:25:04
+ Generated  : 2026-06-14 21:01:06
  Ground truth: Rule-derived from event signals (313 anomalies, 687 benign)
 
 ── SCORECARD ─────────────────────────────────────────────────────────
@@ -9,7 +9,7 @@
   --------------------------------------------------------------------
   Detection Rate (Recall)             93.9%        > 80%              ✅  PASS
   False Positive Rate                 5.4%         < 15%              ✅  PASS
-  Time Lag (Processing Speed)         2.28ms for 1,000 events < 1 hour           ✅  PASS
+  Time Lag (Processing Speed)         2.46ms for 1,000 events < 1 hour           ✅  PASS
   Explainability Coverage             100.0%       100% (every alert has reason) ✅  PASS
   Compliance Mapping Coverage         100.0%       Drifts → NIST/CIS/GDPR ✅  PASS
 
@@ -36,16 +36,16 @@
    Details : Wrongly flagged 37 of 687 benign events.
 
 ── TIME LAG (PROCESSING SPEED) ─────────────────────────────────────────
-   Result  : 2.28ms for 1,000 events
+   Result  : 2.46ms for 1,000 events
    Target  : < 1 hour
    Status  : ✅  PASS
-   Details : Avg 2.28ms for 1,000 events (2.28µs/event). Scales to 22.8ms for 10K events. Target < 1 hour: FAR exceeded.
+   Details : Avg 2.46ms for 1,000 events (2.46µs/event). Scales to 24.6ms for 10K events. Target < 1 hour: FAR exceeded.
    Timing breakdown:
-     Total (1,000 events) : 2.28ms
-     Per event            : 2.28µs
-     Throughput           : 438,035 events/sec
-     Scaled (10K events)  : 22.8ms
-     Scaled (100K events) : 228ms  (~0.2s)
+     Total (1,000 events) : 2.46ms
+     Per event            : 2.46µs
+     Throughput           : 405,972 events/sec
+     Scaled (10K events)  : 24.6ms
+     Scaled (100K events) : 246ms  (~0.2s)
 
 ── EXPLAINABILITY COVERAGE ─────────────────────────────────────────
    Result  : 100.0%

@@ -637,8 +637,8 @@ The dashboard follows a **professional SOC (Security Operations Centre) dark aes
 
 |  | Predicted Risky | Predicted Benign |
 |--|----------------|-----------------|
-| **Actually Risky** | TP = 294 ✅ | FN = 19 ❌ |
-| **Actually Benign** | FP = 37 ⚠️ | TN = 650 ✅ |
+| **Actually Risky** | TP = 294  | FN = 19  |
+| **Actually Benign** | FP = 37  | TN = 650  |
 
 - **Precision:** 294/(294+37) = **88.8%**
 - **Recall:** 294/(294+19) = **93.9%**
